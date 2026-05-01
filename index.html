@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sentinel — 3-Slide Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg0:#020408; --bg1:#060c14; --bg2:#0a1220; --bg3:#0f192c;
+  --glass:rgba(15,25,44,.72);
+  --bdr:rgba(255,255,255,.06); --bdr2:rgba(255,255,255,.12); --bdr3:rgba(255,255,255,.22);
+  --tx:#dde6f5; --dim:#6e7fa0; --muted:#3a4a60;
+  --blue:#4f8eff; --blueG:rgba(79,142,255,.13);
+  --red:#ff4f6a;  --redG:rgba(255,79,106,.13);
+  --teal:#00e5b0; --tealG:rgba(0,229,176,.13);
+  --gold:#ffb830; --goldG:rgba(255,184,48,.13);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var(--tx);font-family:'Outfit',sans-serif;font-weight:300;}
+
+/* ── CANVAS ── */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* ── DECK ── */
+.deck{position:fixed;inset:0;z-index:10;}
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;overflow:hidden;
+  transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.22,1,.36,1);
+  transform:scale(.975) translateY(14px);
+}
+.slide.active{opacity:1;pointer-events:all;transform:scale(1) translateY(0);}
+.slide.exit{opacity:0;transform:scale(1.02) translateY(-12px);}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+  z-index:200;display:flex;align-items:center;gap:14px;
+  background:rgba(6,12,20,.92);border:1px solid var(--bdr2);
+  backdrop-filter:blur(24px);padding:8px 18px;border-radius:40px;
+  box-shadow:0 8px 40px rgba(0,0,0,.6);
+}
+.nav button{background:none;border:none;color:var(--dim);font-size:13px;cursor:pointer;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.nav button:hover{background:var(--bg3);color:var(--tx);}
+.dots{display:flex;gap:6px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--muted);cursor:pointer;transition:all .3s;}
+.dot.active{width:24px;border-radius:4px;}
+
+/* ── PROGRESS + COUNTER ── */
+.pbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:300;background:var(--bg2);}
+.pfill{height:100%;transition:width .5s ease,background .5s ease;}
+.sno{position:fixed;top:15px;right:22px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;z-index:300;}
+
+/* ── SLIDE LABEL ── */
+.slide-label{
+  position:absolute;top:20px;left:28px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;
+  opacity:.6;z-index:10;
+}
+
+/* ── TYPOGRAPHY ── */
+.display{font-size:clamp(36px,5vw,60px);font-weight:900;line-height:1.0;}
+.headline{font-size:clamp(20px,2.4vw,28px);font-weight:700;line-height:1.1;}
+.label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ── CARDS ── */
+.card{background:var(--glass);border:1px solid var(--bdr2);border-radius:12px;backdrop-filter:blur(10px);padding:20px 22px;}
+.card-sm{background:rgba(10,18,32,.65);border:1px solid var(--bdr);border-radius:8px;padding:10px 14px;}
+
+/* ── STAGGER ANIMATION ── */
+@keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.ri{animation:riseIn .5s ease both;}
+.ri1{animation-delay:.04s;} .ri2{animation-delay:.1s;} .ri3{animation-delay:.17s;}
+.ri4{animation-delay:.24s;} .ri5{animation-delay:.32s;} .ri6{animation-delay:.41s;}
+.ri7{animation-delay:.50s;} .ri8{animation-delay:.60s;}
+
+/* ── SCAN LINE ── */
+@keyframes scan{0%{top:0;opacity:1;}100%{top:100%;opacity:0;}}
+.scan-host{position:relative;overflow:hidden;}
+.scan-host::after{
+  content:'';position:absolute;left:0;right:0;height:2px;top:0;
+  background:linear-gradient(90deg,transparent,currentColor 40%,currentColor 60%,transparent);
+  animation:scan 1.6s ease 0.1s both;pointer-events:none;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 1 — THE CONVERSATION
+═══════════════════════════════════════ */
+/* full-bleed two-column: left=context, right=chat */
+.s1-grid{display:grid;grid-template-columns:340px 1fr;height:100%;overflow:hidden;}
+
+.s1-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:28px 36px 80px 44px;
+  border-right:1px solid var(--bdr);
+  gap:20px;
+}
+
+.s1-right{
+  display:flex;flex-direction:column;
+  padding:28px 36px 80px;
+  overflow:hidden;
+}
+.s1-right-title{margin-bottom:18px;flex-shrink:0;}
+.chat-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.chat-scroll::-webkit-scrollbar{width:3px;}
+.chat-scroll::-webkit-scrollbar-thumb{background:var(--bg3);}
+
+/* chat bubbles */
+.msg{display:flex;flex-direction:column;gap:3px;}
+.msg-c{align-items:flex-start;}
+.msg-a{align-items:flex-end;}
+.msg-role{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
+.msg-role-c{color:#ff7a5a;}
+.msg-role-a{color:#7aabff;}
+.msg-ts{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);}
+.bubble{max-width:85%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.65;}
+.bubble-c{background:var(--bg3);border:1px solid var(--bdr2);color:var(--tx);border-bottom-left-radius:3px;}
+.bubble-a{background:var(--bg2);border:1px solid var(--bdr);color:var(--dim);border-bottom-right-radius:3px;}
+
+/* context fact rows */
+.fact{display:flex;align-items:baseline;gap:8px;padding:7px 0;border-bottom:1px solid var(--bdr);}
+.fact:last-child{border-bottom:none;}
+.fact-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:80px;flex-shrink:0;}
+.fact-val{font-size:12px;color:var(--tx);}
+
+/* ═══════════════════════════════════════
+   SLIDE 2 — WITHOUT SENTINEL
+═══════════════════════════════════════ */
+.s2-grid{display:grid;grid-template-columns:1fr 1fr 1fr;height:100%;overflow:hidden;}
+.s2-col{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--bdr);}
+.s2-col:last-child{border-right:none;}
+.s2-col-hdr{padding:14px 22px 10px;border-bottom:1px solid var(--bdr);flex-shrink:0;}
+.s2-col-body{padding:16px 20px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:8px;}
+.s2-col-body::-webkit-scrollbar{width:3px;}
+.s2-col-body::-webkit-scrollbar-thumb{background:var(--bg3);}
+
+/* timeline */
+.tl{display:flex;flex-direction:column;}
+.tl-row{display:flex;gap:13px;padding-bottom:18px;position:relative;}
+.tl-row:last-child{padding-bottom:0;}
+.tl-spine{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:3px;}
+.tl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.tl-line{width:1px;flex:1;background:var(--bdr2);margin-top:5px;}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:3px;}
+.tl-title{font-size:12px;font-weight:600;margin-bottom:3px;line-height:1.3;}
+.tl-body{font-size:11px;color:var(--dim);line-height:1.65;}
+
+/* gap cards */
+.gap-card{background:var(--redG);border:1px solid rgba(255,79,106,.22);border-radius:8px;padding:12px 14px;}
+.gap-title{font-size:11px;font-weight:600;color:var(--red);margin-bottom:5px;}
+.gap-body{font-size:11px;color:var(--dim);line-height:1.6;}
+
+/* stat blocks */
+.stat-block{text-align:center;border-radius:10px;padding:18px 14px;border:1px solid;}
+.stat-big{font-size:48px;font-weight:900;line-height:1;}
+.stat-sub{font-size:11px;color:var(--dim);margin-top:6px;}
+
+/* ═══════════════════════════════════════
+   SLIDE 3 — WITH SENTINEL
+═══════════════════════════════════════ */
+.s3-grid{display:grid;grid-template-columns:1fr 1fr;height:100%;overflow:hidden;}
+.s3-left{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--bdr);}
+.s3-right{display:flex;flex-direction:column;overflow:hidden;}
+.s3-hdr{padding:14px 24px 10px;border-bottom:1px solid var(--bdr);flex-shrink:0;}
+.s3-body{padding:16px 22px;overflow-y:auto;flex:1;}
+.s3-body::-webkit-scrollbar{width:3px;}
+.s3-body::-webkit-scrollbar-thumb{background:var(--bg3);}
+
+/* process flow strip */
+.flow{display:flex;flex-direction:column;gap:0;}
+.flow-step{
+  display:flex;gap:14px;padding:14px 16px;
+  background:var(--bg2);border:1px solid var(--bdr);
+  transition:background .2s;position:relative;
+}
+.flow-step:not(:last-child){border-bottom:none;}
+.flow-step:first-child{border-radius:10px 10px 0 0;}
+.flow-step:last-child{border-radius:0 0 10px 10px;}
+.flow-step::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--accent,var(--blue));border-radius:10px 0 0 10px;
+  opacity:0;transition:opacity .3s;
+}
+.flow-step:hover::before{opacity:1;}
+.flow-step:hover{background:rgba(15,25,44,.9);}
+.flow-icon{
+  width:32px;height:32px;border-radius:8px;border:1px solid;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.flow-content{flex:1;min-width:0;}
+.flow-model{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;margin-bottom:3px;}
+.flow-desc{font-size:12px;font-weight:500;margin-bottom:3px;}
+.flow-detail{font-size:11px;color:var(--dim);line-height:1.55;}
+.flow-output{
+  margin-top:6px;display:inline-flex;align-items:center;gap:6px;
+  padding:3px 10px;border-radius:10px;border:1px solid;
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;
+}
+
+/* comparison rows */
+.cmp-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--bg2);border:1px solid var(--bdr);
+  border-radius:8px;overflow:hidden;margin-bottom:7px;
+}
+.cmp-before{padding:10px 13px;border-right:1px solid var(--bdr);}
+.cmp-after{padding:10px 13px;background:var(--tealG);}
+.cmp-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.cmp-text{font-size:11px;color:var(--dim);line-height:1.5;}
+
+/* verdict banner */
+.verdict-banner{
+  border-radius:10px;padding:16px 18px;
+  border:1px solid;margin-bottom:10px;
+}
+
+/* prob bars */
+.prow{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.plbl{font-size:10.5px;color:var(--dim);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ptrack{width:90px;flex-shrink:0;background:rgba(255,255,255,.05);border-radius:2px;height:5px;overflow:hidden;}
+.pfillb{height:100%;border-radius:2px;transition:width .8s cubic-bezier(.4,0,.2,1);}
+.ppct{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);width:28px;text-align:right;flex-shrink:0;}
+
+/* top bar shared */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px 12px;border-bottom:1px solid var(--bdr);flex-shrink:0;
+}
+.tb-left{display:flex;flex-direction:column;gap:3px;}
+.tb-step{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;}
+.tb-title{font-size:clamp(18px,2.2vw,24px);font-weight:700;line-height:1.1;}
+.tb-sub{font-size:11px;color:var(--dim);}
+.tb-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:10px;border:1px solid;font-weight:500;}
+
+/* json */
+.json{background:#020810;border:1px solid var(--bdr2);border-radius:7px;padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.8;margin-top:8px;}
+.jk{color:#7aaaff;}.jv{color:var(--teal);}.jn{color:var(--gold);}.jc{color:var(--muted);}
+.j-neg{color:var(--red);font-weight:600;}.j-pos{color:var(--teal);font-weight:600;}
+
+/* glow quote */
+.glow-quote{
+  border-left:3px solid var(--teal);padding:14px 18px;
+  background:var(--tealG);border-radius:0 8px 8px 0;
+  font-size:13px;font-weight:500;color:var(--teal);
+  line-height:1.6;font-style:italic;
+  box-shadow:0 0 20px rgba(0,229,176,.08);
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="pbar"><div class="pfill" id="prog"></div></div>
+<div class="sno" id="sno">1 / 3</div>
+
+<div class="deck" id="deck">
+
+
+<!-- ══════════════════════════════════════════════════════
+  SLIDE 1 — THE CONVERSATION
+══════════════════════════════════════════════════════ -->
+<div class="slide active" id="s0">
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-step" style="color:var(--dim);">Sentinel Demo · Case Walkthrough</div>
+    <div class="tb-title">The Conversation</div>
+    <div class="tb-sub">A real customer hardship interaction — the same case traced through all four Sentinel models</div>
+  </div>
+  <span class="tb-badge" style="color:var(--blue);border-color:rgba(79,142,255,.35);background:var(--blueG);">conv_HDR_2025 · IRE0107444</span>
+</div>
+
+<div class="s1-grid" style="flex:1;min-height:0;">
+
+  <!-- LEFT: context -->
+  <div class="s1-left">
+    <div>
+      <div class="label ri ri1" style="margin-bottom:12px;">conv_HDR_2025 · 14 Mar 2025</div>
+      <div class="headline ri ri2" style="margin-bottom:8px;">A customer contacts ANZ about their hardship application</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.75;" class="ri ri3">
+        Three weeks after lodging a hardship request, the customer has heard nothing. No written response. No acknowledgement. They reach out via the Message Us channel — frustrated, financially stressed.
+      </div>
+    </div>
+
+    <div class="card ri ri4 scan-host" style="color:var(--gold);">
+      <div class="label" style="margin-bottom:12px;color:var(--gold);">Case context</div>
+      <div class="fact"><div class="fact-label">Complaint</div><div class="fact-val">CMOS-04003327 · raised 27 Nov 2024</div></div>
+      <div class="fact"><div class="fact-label">Event</div><div class="fact-val">IRE0107444 · triggered when complaint closed unresolved</div></div>
+      <div class="fact"><div class="fact-label">Channel</div><div class="fact-val">ANZ Message Us · LivePerson</div></div>
+      <div class="fact"><div class="fact-label">Product</div><div class="fact-val">Home Loan · Financial Wellbeing Collections</div></div>
+      <div class="fact"><div class="fact-label">Customer</div><div class="fact-val">Non-Vulnerable · 1 customer impacted</div></div>
+    </div>
+
+    <div class="ri ri5" style="background:rgba(255,79,106,.08);border:1px solid rgba(255,79,106,.2);border-radius:8px;padding:12px 14px;">
+      <div style="font-size:10px;font-weight:600;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;">⚡ Key Rule</div>
+      <div style="font-size:12px;color:var(--dim);line-height:1.65;">The IRE event is created <strong style="color:var(--tx);">only when a complaint is raised but not resolved</strong> — the unresolved closure of CMOS-04003327 triggered IRE0107444.</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: chat -->
+  <div class="s1-right">
+    <div class="s1-right-title">
+      <div class="label ri ri1" style="margin-bottom:6px;color:var(--blue);">LivePerson transcript · Message Us channel</div>
+      <div style="font-size:12px;color:var(--dim);" class="ri ri2">Full conversation between the customer and ANZ agent</div>
+    </div>
+    <div class="chat-scroll" id="chat1"></div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  SLIDE 2 — WITHOUT SENTINEL
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="s1">
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-step" style="color:var(--red);">Without Sentinel</div>
+    <div class="tb-title">What actually happened</div>
+    <div class="tb-sub">Manual. Reactive. Caught by chance — if at all.</div>
+  </div>
+  <span class="tb-badge" style="color:var(--red);border-color:rgba(255,79,106,.4);background:var(--redG);">IRE0107444 · 240 days open</span>
+</div>
+
+<div class="s2-grid">
+
+  <!-- COL 1: real timeline -->
+  <div class="s2-col">
+    <div class="s2-col-hdr"><div class="label" style="color:var(--red);">What actually happened</div></div>
+    <div class="s2-col-body">
+      <div class="tl">
+
+        <div class="tl-row ri ri1">
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--dim);"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-date">27 Nov 2024</div>
+            <div class="tl-title">Customer contacts Collections</div>
+            <div class="tl-body">Hardship application declined multiple times with no written communication. Collections officer raises complaint — CMOS-04003327.</div>
+          </div>
+        </div>
+
+        <div class="tl-row ri ri2">
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--red);"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-date">4 Dec 2024</div>
+            <div class="tl-title" style="color:var(--red);">Complaint closed — unresolved ❌</div>
+            <div class="tl-body">Customer Connect operator closes CMOS via MS Teams without reviewing the case. Customer still dissatisfied. <strong style="color:var(--gold);">This triggers IRE0107444.</strong></div>
+          </div>
+        </div>
+
+        <div class="tl-row ri ri3">
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-date">4–5 Dec 2024</div>
+            <div class="tl-title" style="color:var(--gold);">IRE0107444 created</div>
+            <div class="tl-body">NFR event raised with empty fields. Reportability unknown. No ASIC clock started. Sits unstructured in backlog.</div>
+          </div>
+        </div>
+
+        <div class="tl-row ri ri4">
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-date">5 Dec 2024</div>
+            <div class="tl-title" style="color:var(--gold);">Caught by chance ⚠</div>
+            <div class="tl-body">Frontline Hardship happens to review the case. Premature closure discovered. CMOS reopened. IRE still unstructured.</div>
+          </div>
+        </div>
+
+        <div class="tl-row ri ri5">
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--dim);"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-date">14 Mar 2025</div>
+            <div class="tl-title">Customer contacts again</div>
+            <div class="tl-body">Still no written response after 3 weeks. Customer unaware of decision. Reaches out via Message Us.</div>
+          </div>
+        </div>
+
+        <div class="tl-row ri ri6">
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--dim);"></div><div class="tl-line"></div></div>
+          <div>
+            <div class="tl-date">3 Feb 2025</div>
+            <div class="tl-title">Resolution — 68 days late</div>
+            <div class="tl-body">Hardship approved. $1,000 compensation. IRE fields still being manually completed by analyst.</div>
+          </div>
+        </div>
+
+        <div class="tl-row ri ri7" style="padding-bottom:0;">
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--red);"></div></div>
+          <div>
+            <div class="tl-date">25 Jul 2025</div>
+            <div class="tl-title" style="color:var(--red);">IRE0107444 closed — 240 days later</div>
+            <div class="tl-body">Reportability finally determined. ASIC window well and truly missed.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 2: what was missing -->
+  <div class="s2-col">
+    <div class="s2-col-hdr"><div class="label" style="color:var(--red);">What was missing</div></div>
+    <div class="s2-col-body">
+
+      <div class="gap-card ri ri1">
+        <div class="gap-title">✗ No topic classification</div>
+        <div class="gap-body">Conversation entered as undifferentiated noise. No BU reporting, no volume trends, no way to know hardship cases were spiking.</div>
+      </div>
+
+      <div class="gap-card ri ri2">
+        <div class="gap-title">✗ Complaint relied on one agent's judgment</div>
+        <div class="gap-body">If that Collections officer hadn't acted, CMOS-04003327 would never have been raised. No systematic scoring of every interaction.</div>
+      </div>
+
+      <div class="gap-card ri ri3">
+        <div class="gap-title">✗ Unresolved closure not automatically detected</div>
+        <div class="gap-body">No system flagged that CMOS-04003327 was closed without resolution. The IRE event sat with empty fields. Only chance surfaced it.</div>
+      </div>
+
+      <div class="gap-card ri ri4">
+        <div class="gap-title">✗ IRE fields populated manually — weeks late</div>
+        <div class="gap-body">Reportability, root cause, L1/L2, vulnerability, financial loss — all required specialist analyst time. Inconsistent. Too slow for ASIC windows.</div>
+      </div>
+
+      <div class="gap-card ri ri5">
+        <div class="gap-title">✗ IDR obligation breach never tested</div>
+        <div class="gap-body">No written response issued after hardship decision. No automated IDR test ran. Breach invisible until customer escalated — 14 days overdue.</div>
+      </div>
+
+      <div class="gap-card ri ri6">
+        <div class="gap-title">✗ 2LOD had no independent view</div>
+        <div class="gap-body">Second Line relied entirely on 1LOD reporting. No governed analytics. No systematic oversight of this or thousands of similar interactions.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COL 3: cost -->
+  <div class="s2-col" style="border-right:none;">
+    <div class="s2-col-hdr"><div class="label" style="color:var(--red);">The cost</div></div>
+    <div class="s2-col-body" style="gap:10px;">
+
+      <div class="stat-block ri ri1" style="background:rgba(255,79,106,.07);border-color:rgba(255,79,106,.25);">
+        <div class="stat-big" style="color:var(--red);text-shadow:0 0 28px rgba(255,79,106,.4);">240</div>
+        <div class="stat-sub">days for IRE to close</div>
+      </div>
+
+      <div class="stat-block ri ri2" style="background:rgba(255,184,48,.07);border-color:rgba(255,184,48,.25);">
+        <div class="stat-big" style="color:var(--gold);font-size:36px;text-shadow:0 0 24px rgba(255,184,48,.4);">$1,000</div>
+        <div class="stat-sub">compensation for avoidable failure</div>
+      </div>
+
+      <div class="stat-block ri ri3" style="background:rgba(255,79,106,.07);border-color:rgba(255,79,106,.25);">
+        <div class="stat-big" style="color:var(--red);font-size:36px;">14+ days</div>
+        <div class="stat-sub">IDR written response overdue</div>
+      </div>
+
+      <div class="card-sm ri ri4" style="border-color:rgba(255,79,106,.2);">
+        <div style="font-size:12px;color:var(--dim);line-height:1.7;">
+          This case was caught <strong style="color:var(--tx);">only by chance.</strong><br/>
+          One reviewer happened to look.<br/><br/>
+          Without that, the IDR breach, the unresolved complaint, and the ASIC reportable event would all have been missed.<br/><br/>
+          <strong style="color:var(--red);">How many like it were not caught?</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+  SLIDE 3 — WITH SENTINEL
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-step" style="color:var(--teal);">With Sentinel</div>
+    <div class="tb-title">How Sentinel solves it</div>
+    <div class="tb-sub">The same conversation. Automatically. In the same day — not 240 days.</div>
+  </div>
+  <span class="tb-badge" style="color:var(--teal);border-color:rgba(0,229,176,.3);background:var(--tealG);">4 Models · CRDH · ASIC ✓</span>
+</div>
+
+<div class="s3-grid">
+
+  <!-- LEFT: how sentinel processes it -->
+  <div class="s3-left">
+    <div class="s3-hdr">
+      <div class="label" style="color:var(--teal);">Sentinel pipeline — same conversation, same day</div>
+    </div>
+    <div class="s3-body">
+
+      <div style="background:rgba(255,184,48,.07);border:1px solid rgba(255,184,48,.25);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:11.5px;color:var(--gold);" class="ri ri1">
+        ⚡ <strong>Trigger:</strong> CMOS-04003327 closed without resolution → IRE0107444 created → Sentinel ingests both the conversation and the IRE event
+      </div>
+
+      <div class="flow ri ri2">
+
+        <div class="flow-step" style="--accent:var(--blue);">
+          <div class="flow-icon" style="color:var(--blue);border-color:rgba(79,142,255,.3);background:var(--blueG);">🗂</div>
+          <div class="flow-content">
+            <div class="flow-model" style="color:var(--blue);">Topic Model · LDA · 25 topics</div>
+            <div class="flow-desc">What is this conversation about?</div>
+            <div class="flow-detail">Conversation classified immediately. Feeds BU dashboards, volume trends, and downstream models as a signal.</div>
+            <div class="flow-output" style="color:var(--blue);border-color:rgba(79,142,255,.3);background:var(--blueG);">hardship_request · confidence 0.84</div>
+          </div>
+        </div>
+
+        <div class="flow-step" style="--accent:var(--red);">
+          <div class="flow-icon" style="color:var(--red);border-color:rgba(255,79,106,.3);background:var(--redG);">⚠️</div>
+          <div class="flow-content">
+            <div class="flow-model" style="color:var(--red);">Complaints Model · BiLSTM · 5 models</div>
+            <div class="flow-desc">Is this a genuine complaint?</div>
+            <div class="flow-detail">562-pattern dissatisfaction matching. Scores sentiment, toxicity, complaint probability. No agent discretion needed — every interaction covered.</div>
+            <div class="flow-output" style="color:var(--red);border-color:rgba(255,79,106,.3);background:var(--redG);">COMPLAINT · score 0.94 · label=1</div>
+          </div>
+        </div>
+
+        <div class="flow-step" style="--accent:var(--teal);">
+          <div class="flow-icon" style="color:var(--teal);border-color:rgba(0,229,176,.3);background:var(--tealG);">🔍</div>
+          <div class="flow-content">
+            <div class="flow-model" style="color:var(--teal);">NFR Model · 8 sub-models · IRE0107444</div>
+            <div class="flow-desc">What does the linked IRE event tell us?</div>
+            <div class="flow-detail">8 models run in parallel on the raw IRE text: AU connection, dates, vulnerability, financial loss, reportability, and 5D categorisation via Claude + RapidFuzz.</div>
+            <div class="flow-output" style="color:var(--red);border-color:rgba(255,79,106,.3);background:var(--redG);">Reportable · p=0.54 · Human Error</div>
+          </div>
+        </div>
+
+        <div class="flow-step" style="--accent:var(--gold);">
+          <div class="flow-icon" style="color:var(--gold);border-color:rgba(255,184,48,.3);background:var(--goldG);">⚖️</div>
+          <div class="flow-content">
+            <div class="flow-model" style="color:var(--gold);">Agentic MDC · Bedrock · Claude Sonnet</div>
+            <div class="flow-desc">Did the bank meet its IDR obligations?</div>
+            <div class="flow-detail">Proposition tests run against obl-idr-provide-written-response. prop-written-response-issued FALSE (p=0.07). BDD synthesis → NEGATIVE. 2LOD notified.</div>
+            <div class="flow-output" style="color:var(--red);border-color:rgba(255,79,106,.3);background:var(--redG);">BREACH · compliance NEGATIVE · p=0.07</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT: outcomes -->
+  <div class="s3-right">
+    <div class="s3-hdr">
+      <div class="label" style="color:var(--teal);">Before vs After — every gap closed</div>
+    </div>
+    <div class="s3-body">
+
+      <div class="cmp-row ri ri1">
+        <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">IDR breach missed — no written response, 14+ days overdue</div></div>
+        <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">Breach detected same day. 2LOD notified. Written response issued. ASIC window met.</div></div>
+      </div>
+
+      <div class="cmp-row ri ri2">
+        <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">Complaint only logged if one agent chose to raise it</div></div>
+        <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">Every conversation scored automatically. Comp 0.94 flagged without relying on anyone.</div></div>
+      </div>
+
+      <div class="cmp-row ri ri3">
+        <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">IRE fields populated manually by analyst — weeks, inconsistent</div></div>
+        <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">All 8 IRE fields extracted in minutes. Reportable flagged. ASIC clock starts immediately.</div></div>
+      </div>
+
+      <div class="cmp-row ri ri4">
+        <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">Conversation never classified. No BU trends, no early warning.</div></div>
+        <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">hardship_request tagged instantly. Hardship spike visible to 2LOD before escalation.</div></div>
+      </div>
+
+      <div class="cmp-row ri ri5">
+        <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">2LOD had no independent view — relied on 1LOD reporting</div></div>
+        <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">Independent analytics. 2LOD sees every interaction, full audit trail.</div></div>
+      </div>
+
+      <div class="cmp-row ri ri6">
+        <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">Event closed 240 days after start. ASIC window missed.</div></div>
+        <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">Case resolved next business day. Zero analyst hours on field extraction.</div></div>
+      </div>
+
+      <!-- KEY INSIGHT ROW -->
+      <div class="cmp-row ri ri7" style="border:1px solid rgba(255,184,48,.3);background:rgba(10,18,32,.8);">
+        <div class="cmp-before" style="background:rgba(255,79,106,.08);">
+          <div class="cmp-tag" style="color:var(--red);">Before — IRE0107444 created</div>
+          <div class="cmp-text">Complaint closed unresolved → IRE event triggered → 240 days of manual analyst work, backlog, and regulatory exposure.</div>
+        </div>
+        <div class="cmp-after" style="background:rgba(255,184,48,.1);">
+          <div class="cmp-tag" style="color:var(--gold);">With Sentinel — IRE event not required</div>
+          <div class="cmp-text">Complaint detected and IDR breach surfaced on day one. Hardship resolved same day. <strong style="color:var(--gold);">The unresolved closure that triggered the IRE would never have happened.</strong></div>
+        </div>
+      </div>
+
+      <div class="glow-quote ri ri8">
+        "Sentinel paves the way for an informed, proactive approach where customer interactions are handled with the utmost care."
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+</div><!-- /deck -->
+
+<div class="nav">
+  <button onclick="go(-1)">←</button>
+  <div class="dots" id="dots"></div>
+  <button onclick="go(1)">→</button>
+</div>
+
+<script>
+// ══ STAR FIELD ══════════════════════
+const cvs=document.getElementById('bg');
+const ctx=cvs.getContext('2d');
+let stars=[];
+function initBg(){
+  cvs.width=innerWidth;cvs.height=innerHeight;
+  stars=Array.from({length:160},()=>({
+    x:Math.random()*cvs.width,y:Math.random()*cvs.height,
+    r:Math.random()*1.1+.2,a:Math.random(),
+    da:(.002+Math.random()*.003)*(Math.random()>.5?1:-1)
+  }));
+}
+function drawBg(){
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+  // nebula glow
+  const g=ctx.createRadialGradient(cvs.width*.25,cvs.height*.35,0,cvs.width*.25,cvs.height*.35,cvs.width*.45);
+  g.addColorStop(0,'rgba(25,45,110,.05)');g.addColorStop(1,'transparent');
+  ctx.fillStyle=g;ctx.fillRect(0,0,cvs.width,cvs.height);
+  const g2=ctx.createRadialGradient(cvs.width*.75,cvs.height*.65,0,cvs.width*.75,cvs.height*.65,cvs.width*.35);
+  g2.addColorStop(0,'rgba(0,100,80,.03)');g2.addColorStop(1,'transparent');
+  ctx.fillStyle=g2;ctx.fillRect(0,0,cvs.width,cvs.height);
+  // stars
+  stars.forEach(s=>{
+    s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(160,190,255,${s.a*.35})`;ctx.fill();
+  });
+  requestAnimationFrame(drawBg);
+}
+initBg();drawBg();
+window.addEventListener('resize',initBg);
+
+// ══ CONVERSATION DATA ══════════════
+const MSGS=[
+  {ts:'2025-03-14 09:15:22',r:'Consumer',
+   m:'I applied for hardship assistance on my home loan three weeks ago. I have not received any written response or decision. This is unacceptable.'},
+  {ts:'2025-03-14 09:15:55',r:'Agent',
+   m:'Thank you for contacting ANZ. I can see your hardship application. Let me look into the status for you.'},
+  {ts:'2025-03-14 09:22:10',r:'Agent',
+   m:'I can see the hardship assessment was completed on 28 February. Unfortunately the application was declined.'},
+  {ts:'2025-03-14 09:22:45',r:'Consumer',
+   m:"Declined? Nobody told me! I have been making full repayments I cannot afford. Why was I not notified in writing?"},
+  {ts:'2025-03-14 09:31:00',r:'Agent',
+   m:"I sincerely apologise for the lack of communication. A written decision letter should have been sent. I will escalate this and ensure a written response is issued to you today."},
+  {ts:'2025-03-14 09:32:15',r:'Consumer',
+   m:"This has caused me significant financial stress. I want a formal complaint lodged and compensation considered."},
+  {ts:'2025-03-14 09:35:44',r:'Agent',
+   m:'I have lodged a formal complaint on your behalf — reference CMOS-04887231. A team leader will contact you within 2 business days with a written resolution.'},
+];
+
+// ══ BUILD CHAT ═════════════════════
+function buildChat(){
+  const el=document.getElementById('chat1');
+  MSGS.forEach((m,i)=>{
+    const isC=m.r==='Consumer';
+    const d=document.createElement('div');
+    d.className='msg '+(isC?'msg-c':'msg-a')+' ri';
+    d.style.animationDelay=(i*.08)+'s';
+    d.innerHTML=`
+      <div class="msg-role ${isC?'msg-role-c':'msg-role-a'}">${m.r}</div>
+      <div class="msg-ts">[${m.ts}]</div>
+      <div class="bubble ${isC?'bubble-c':'bubble-a'}">${m.m}</div>`;
+    el.appendChild(d);
+  });
+}
+buildChat();
+
+// ══ SLIDE ENGINE ══════════════════
+const slides=document.querySelectorAll('.slide');
+const N=slides.length;let cur=0;
+const COLORS=['#6e7fa0','#ff4f6a','#00e5b0'];
+const DOT_LABELS=['The Conversation','Without Sentinel','With Sentinel'];
+
+function buildDots(){
+  const el=document.getElementById('dots');
+  COLORS.forEach((c,i)=>{
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' active':'');
+    d.style.background=i===0?c:'';
+    d.title=DOT_LABELS[i];
+    d.onclick=()=>goTo(i);
+    el.appendChild(d);
+  });
+}
+
+function goTo(n){
+  if(n===cur)return;
+  slides[cur].classList.remove('active');slides[cur].classList.add('exit');
+  const old=cur;cur=n;
+  setTimeout(()=>slides[old].classList.remove('exit'),580);
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot').forEach((d,i)=>{
+    d.classList.toggle('active',i===cur);
+    d.style.background=i===cur?COLORS[cur]:'';
+  });
+  document.getElementById('prog').style.width=((cur+1)/N*100)+'%';
+  document.getElementById('prog').style.background=COLORS[cur];
+  document.getElementById('sno').textContent=(cur+1)+' / '+N;
+}
+function go(d){goTo(Math.max(0,Math.min(N-1,cur+d)));}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);
+});
+
+buildDots();
+// init progress bar and counter to slide 1 state
+document.getElementById('prog').style.width = (1/N*100)+'%';
+document.getElementById('prog').style.background = COLORS[0];
+document.getElementById('sno').textContent = '1 / '+N;
+</script>
+</body>
+</html>
