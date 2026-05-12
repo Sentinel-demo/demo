@@ -9,14 +9,17 @@
 /* ── RESET ── */
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg0:#020408; --bg1:#060c14; --bg2:#0a1220; --bg3:#0f192c;
-  --glass:rgba(15,25,44,.72);
-  --bdr:rgba(255,255,255,.06); --bdr2:rgba(255,255,255,.12); --bdr3:rgba(255,255,255,.22);
-  --tx:#dde6f5; --dim:#6e7fa0; --muted:#3a4a60;
-  --blue:#4f8eff; --blueG:rgba(79,142,255,.13);
-  --red:#ff4f6a;  --redG:rgba(255,79,106,.13);
-  --teal:#00e5b0; --tealG:rgba(0,229,176,.13);
-  --gold:#ffb830; --goldG:rgba(255,184,48,.13);
+  --bg0:#ffffff; --bg1:#f5f6f8; --bg2:#eef0f4; --bg3:#e4e7ed;
+  --glass:rgba(255,255,255,.85);
+  --bdr:rgba(0,0,0,.08); --bdr2:rgba(0,0,0,.14); --bdr3:rgba(0,0,0,.22);
+  --tx:#1a2035; --dim:#4a5568; --muted:#8896a8;
+  --blue:#2563eb; --blueG:rgba(37,99,235,.1);
+  --red:#f59e0b;  --redG:rgba(245,158,11,.12);
+  --teal:#059669; --tealG:rgba(5,150,105,.1);
+  --gold:#d97706; --goldG:rgba(217,119,6,.12);
+  --amber:#f59e0b; --amberG:rgba(245,158,11,.12);
+  --purple:#7c3aed;--purpleG:rgba(124,58,237,.1);
+  --orange:#ea580c;--orangeG:rgba(234,88,12,.1);
 }
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var(--tx);font-family:'Outfit',sans-serif;font-weight:300;}
 
@@ -38,12 +41,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .nav{
   position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
   z-index:200;display:flex;align-items:center;gap:14px;
-  background:rgba(6,12,20,.92);border:1px solid var(--bdr2);
+  background:rgba(255,255,255,.95);border:1px solid var(--bdr2);
   backdrop-filter:blur(24px);padding:8px 18px;border-radius:40px;
-  box-shadow:0 8px 40px rgba(0,0,0,.6);
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
 }
 .nav button{background:none;border:none;color:var(--dim);font-size:13px;cursor:pointer;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.nav button:hover{background:var(--bg3);color:var(--tx);}
+.nav button:hover{background:var(--bg2);color:var(--tx);}
 .dots{display:flex;gap:6px;}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);cursor:pointer;transition:all .3s;}
 .dot.active{width:24px;border-radius:4px;}
@@ -58,7 +61,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
   position:absolute;top:20px;left:28px;
   font-family:'JetBrains Mono',monospace;font-size:9px;
   letter-spacing:.22em;text-transform:uppercase;
-  opacity:.6;z-index:10;
+  opacity:.5;z-index:10;
 }
 
 /* ── TYPOGRAPHY ── */
@@ -68,8 +71,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .mono{font-family:'JetBrains Mono',monospace;}
 
 /* ── CARDS ── */
-.card{background:var(--glass);border:1px solid var(--bdr2);border-radius:12px;backdrop-filter:blur(10px);padding:20px 22px;}
-.card-sm{background:rgba(10,18,32,.65);border:1px solid var(--bdr);border-radius:8px;padding:10px 14px;}
+.card{background:#fff;border:1px solid var(--bdr2);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:20px 22px;}
+.card-sm{background:var(--bg1);border:1px solid var(--bdr);border-radius:8px;padding:10px 14px;}
 
 /* ── STAGGER ANIMATION ── */
 @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
@@ -115,12 +118,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .msg-c{align-items:flex-start;}
 .msg-a{align-items:flex-end;}
 .msg-role{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
-.msg-role-c{color:#ff7a5a;}
-.msg-role-a{color:#7aabff;}
+.msg-role-c{color:#c2410c;}
+.msg-role-a{color:#1d4ed8;}
 .msg-ts{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);}
 .bubble{max-width:85%;padding:10px 14px;border-radius:12px;font-size:12px;line-height:1.65;}
-.bubble-c{background:var(--bg3);border:1px solid var(--bdr2);color:var(--tx);border-bottom-left-radius:3px;}
-.bubble-a{background:var(--bg2);border:1px solid var(--bdr);color:var(--dim);border-bottom-right-radius:3px;}
+.bubble-c{background:#fff;border:1px solid var(--bdr2);color:var(--tx);border-bottom-left-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.bubble-a{background:var(--bg1);border:1px solid var(--bdr);color:var(--dim);border-bottom-right-radius:3px;}
 
 /* context fact rows */
 .fact{display:flex;align-items:baseline;gap:8px;padding:7px 0;border-bottom:1px solid var(--bdr);}
@@ -151,12 +154,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .tl-body{font-size:11px;color:var(--dim);line-height:1.65;}
 
 /* gap cards */
-.gap-card{background:var(--redG);border:1px solid rgba(255,79,106,.22);border-radius:8px;padding:12px 14px;}
-.gap-title{font-size:11px;font-weight:600;color:var(--red);margin-bottom:5px;}
+.gap-card{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:12px 14px;}
+.gap-title{font-size:11px;font-weight:600;color:var(--amber);margin-bottom:5px;}
 .gap-body{font-size:11px;color:var(--dim);line-height:1.6;}
 
 /* stat blocks */
-.stat-block{text-align:center;border-radius:10px;padding:18px 14px;border:1px solid;}
+.stat-block{text-align:center;border-radius:10px;padding:18px 14px;border:1px solid;background:#fff;}
 .stat-big{font-size:48px;font-weight:900;line-height:1;}
 .stat-sub{font-size:11px;color:var(--dim);margin-top:6px;}
 
@@ -206,11 +209,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 /* comparison rows */
 .cmp-row{
   display:grid;grid-template-columns:1fr 1fr;
-  background:var(--bg2);border:1px solid var(--bdr);
+  background:#fff;border:1px solid var(--bdr);
   border-radius:8px;overflow:hidden;margin-bottom:7px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
 }
-.cmp-before{padding:10px 13px;border-right:1px solid var(--bdr);}
-.cmp-after{padding:10px 13px;background:var(--tealG);}
+.cmp-before{padding:10px 13px;border-right:1px solid var(--bdr);background:rgba(245,158,11,.05);}
+.cmp-after{padding:10px 13px;background:rgba(5,150,105,.07);}
 .cmp-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
 .cmp-text{font-size:11px;color:var(--dim);line-height:1.5;}
 
@@ -231,26 +235,27 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .topbar{
   display:flex;align-items:center;justify-content:space-between;
   padding:16px 28px 12px;border-bottom:1px solid var(--bdr);flex-shrink:0;
+  background:#fff;
 }
 .tb-left{display:flex;flex-direction:column;gap:3px;}
 .tb-step{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;}
-.tb-title{font-size:clamp(18px,2.2vw,24px);font-weight:700;line-height:1.1;}
+.tb-title{font-size:clamp(18px,2.2vw,24px);font-weight:700;line-height:1.1;color:var(--tx);}
 .tb-sub{font-size:11px;color:var(--dim);}
 .tb-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:10px;border:1px solid;font-weight:500;}
 
 /* json */
-.json{background:#020810;border:1px solid var(--bdr2);border-radius:7px;padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.8;margin-top:8px;}
-.jk{color:#7aaaff;}.jv{color:var(--teal);}.jn{color:var(--gold);}.jc{color:var(--muted);}
-.j-neg{color:var(--red);font-weight:600;}.j-pos{color:var(--teal);font-weight:600;}
+.json{background:var(--bg2);border:1px solid var(--bdr2);border-radius:7px;padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.8;margin-top:8px;}
+.jk{color:#1d4ed8;}.jv{color:var(--teal);}.jn{color:var(--gold);}.jc{color:var(--muted);}
+.j-neg{color:var(--amber);font-weight:600;}.j-pos{color:var(--teal);font-weight:600;}
 
 /* ── ARCH FLOW NODE CARDS ── */
 :root{
-  --purple:#c07aff;--purpleG:rgba(192,122,255,.13);
-  --orange:#ff9050;--orangeG:rgba(255,144,80,.13);
+  --purple:#7c3aed;--purpleG:rgba(124,58,237,.1);
+  --orange:#ea580c;--orangeG:rgba(234,88,12,.1);
 }
 .nc{
   flex:1;border-radius:8px;border:1px solid var(--bdr);
-  background:var(--bg2);display:flex;flex-direction:column;overflow:hidden;
+  background:#fff;display:flex;flex-direction:column;overflow:hidden;
   position:relative;
   opacity:0;transform:translateY(10px) scale(.97);
   transition:opacity .38s ease,transform .38s ease,border-color .3s,box-shadow .3s,background .22s;
@@ -258,10 +263,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .nc.nc-in{opacity:1;transform:translateY(0) scale(1);}
 .nc.nc-proc{
   border-color:var(--ca);
-  box-shadow:0 0 18px var(--cg);
-  background:rgba(15,25,44,.95);
+  box-shadow:0 0 14px var(--cg);
+  background:#fafafa;
 }
-.nc.nc-done{opacity:.58;transform:scale(.98);}
+.nc.nc-done{opacity:.55;transform:scale(.98);}
 @keyframes ncscan{0%{top:-2px;opacity:1;}100%{top:100%;opacity:0;}}
 .nc.nc-proc::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ca),transparent);animation:ncscan 1.1s ease infinite;pointer-events:none;z-index:2;}
 .nc-bar{height:2px;background:var(--ca);flex-shrink:0;}
@@ -273,9 +278,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .nc-icon{width:24px;height:24px;border-radius:6px;border:1px solid;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;transition:box-shadow .3s;}
 .nc.nc-proc .nc-icon{box-shadow:0 0 8px var(--ca);}
 .nc-model{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.11em;text-transform:uppercase;font-weight:500;margin-bottom:1px;}
-.nc-title{font-size:10.5px;font-weight:600;line-height:1.2;}
+.nc-title{font-size:10.5px;font-weight:600;line-height:1.2;color:var(--tx);}
 .nc-desc{font-size:9.5px;color:var(--dim);line-height:1.5;flex:1;}
-.nc-out{opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s;background:rgba(6,12,20,.7);border:1px solid var(--bdr2);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;gap:3px;}
+.nc-out{opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s;background:var(--bg1);border:1px solid var(--bdr2);border-radius:5px;padding:5px 8px;display:flex;flex-direction:column;gap:3px;}
 .nc.nc-done .nc-out,.nc.nc-out-show .nc-out{opacity:1;transform:translateY(0);}
 .nc-out-row{display:flex;justify-content:space-between;align-items:center;font-size:9px;}
 .nc-ok{color:var(--muted);}
@@ -289,17 +294,16 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 .nc-conn-dots div:nth-child(1){animation:ncflow 1.1s ease infinite;}
 .nc-conn-dots div:nth-child(2){animation:ncflow 1.1s ease .37s infinite;}
 .nc-conn-dots div:nth-child(3){animation:ncflow 1.1s ease .74s infinite;}
+/* glow quote — unused on light theme, keep minimal */
+.glow-quote{
   border-left:3px solid var(--teal);padding:14px 18px;
-  background:var(--tealG);border-radius:0 8px 8px 0;
+  background:rgba(5,150,105,.07);border-radius:0 8px 8px 0;
   font-size:13px;font-weight:500;color:var(--teal);
   line-height:1.6;font-style:italic;
-  box-shadow:0 0 20px rgba(0,229,176,.08);
 }
 </style>
 </head>
 <body>
-
-<canvas id="bg"></canvas>
 
 <div class="pbar"><div class="pfill" id="prog"></div></div>
 <div class="sno" id="sno">1 / 3</div>
@@ -317,7 +321,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
     <div class="tb-title">The Conversation</div>
     <div class="tb-sub">A real customer hardship interaction — the same case traced through all four Sentinel models</div>
   </div>
-  <span class="tb-badge" style="color:var(--blue);border-color:rgba(79,142,255,.35);background:var(--blueG);">conv_HDR_2025 · IRExxxx</span>
+  <span class="tb-badge" style="color:var(--blue);border-color:rgba(79,142,255,.35);background:var(--blueG);">conv_HDR_2025 · IRExxxx (NFR Event)</span>
 </div>
 
 <div class="s1-grid" style="flex:1;min-height:0;">
@@ -335,15 +339,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
     <div class="card ri ri4 scan-host" style="color:var(--gold);">
       <div class="label" style="margin-bottom:12px;color:var(--gold);">Case context</div>
       <div class="fact"><div class="fact-label">Complaint</div><div class="fact-val">CMOSxxxx · raised 27 Nov 2024</div></div>
-      <div class="fact"><div class="fact-label">Event</div><div class="fact-val">IRExxxx · triggered when complaint closed unresolved</div></div>
+      <div class="fact"><div class="fact-label">Event</div><div class="fact-val">IRExxxx (NFR Event) · triggered when complaint closed unresolved</div></div>
       <div class="fact"><div class="fact-label">Channel</div><div class="fact-val">ANZ Message Us · LivePerson</div></div>
       <div class="fact"><div class="fact-label">Product</div><div class="fact-val">Home Loan · Financial Wellbeing Collections</div></div>
       <div class="fact"><div class="fact-label">Customer</div><div class="fact-val">Non-Vulnerable · 1 customer impacted</div></div>
     </div>
 
-    <div class="ri ri5" style="background:rgba(255,79,106,.08);border:1px solid rgba(255,79,106,.2);border-radius:8px;padding:12px 14px;">
+    <div class="ri ri5" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px 14px;">
       <div style="font-size:10px;font-weight:600;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;">⚡ Key Rule</div>
-      <div style="font-size:12px;color:var(--dim);line-height:1.65;">The IRE event is created <strong style="color:var(--tx);">only when a complaint is raised but not resolved</strong> — the unresolved closure of CMOSxxxx triggered IRExxxx.</div>
+      <div style="font-size:12px;color:var(--dim);line-height:1.65;">The IRE (NFR Event) is created <strong style="color:var(--tx);">only when a complaint is raised but not resolved</strong> — the unresolved closure of CMOSxxxx triggered IRExxxx (NFR Event).</div>
     </div>
   </div>
 
@@ -370,7 +374,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
     <div class="tb-title">What actually happened</div>
     <div class="tb-sub">Manual. Reactive. Caught by chance — if at all.</div>
   </div>
-  <span class="tb-badge" style="color:var(--red);border-color:rgba(255,79,106,.4);background:var(--redG);">IRExxxx · 240 days open</span>
+  <span class="tb-badge" style="color:var(--amber);border-color:rgba(245,158,11,.4);background:var(--amberG);">IRExxxx (NFR Event) · 240 days open</span>
 </div>
 
 <div class="s2-grid">
@@ -391,11 +395,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
         </div>
 
         <div class="tl-row ri ri2">
-          <div class="tl-spine"><div class="tl-dot" style="background:var(--red);"></div><div class="tl-line"></div></div>
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--amber);"></div><div class="tl-line"></div></div>
           <div>
             <div class="tl-date">4 Dec 2024</div>
             <div class="tl-title" style="color:var(--red);">Complaint closed — unresolved ❌</div>
-            <div class="tl-body">Customer Connect operator closes CMOS via MS Teams without reviewing the case. Customer still dissatisfied. <strong style="color:var(--gold);">This triggers IRExxxx.</strong></div>
+            <div class="tl-body">Customer Connect operator closes CMOS via MS Teams without reviewing the case. Customer still dissatisfied. <strong style="color:var(--gold);">This triggers IRExxxx (NFR Event).</strong></div>
           </div>
         </div>
 
@@ -403,7 +407,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
           <div class="tl-spine"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-line"></div></div>
           <div>
             <div class="tl-date">4–5 Dec 2024</div>
-            <div class="tl-title" style="color:var(--gold);">IRExxxx created</div>
+            <div class="tl-title" style="color:var(--gold);">IRExxxx (NFR Event) created</div>
             <div class="tl-body">NFR event raised with empty fields. Reportability unknown. No ASIC clock started. Sits unstructured in backlog.</div>
           </div>
         </div>
@@ -413,7 +417,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
           <div>
             <div class="tl-date">5 Dec 2024</div>
             <div class="tl-title" style="color:var(--gold);">Caught by chance ⚠</div>
-            <div class="tl-body">Frontline Hardship happens to review the case. Premature closure discovered. CMOS reopened. IRE still unstructured.</div>
+            <div class="tl-body">Frontline Hardship happens to review the case. Premature closure discovered. CMOS reopened. IRE (NFR Event) still unstructured.</div>
           </div>
         </div>
 
@@ -431,15 +435,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
           <div>
             <div class="tl-date">3 Feb 2025</div>
             <div class="tl-title">Resolution — 68 days late</div>
-            <div class="tl-body">Hardship approved. $1,000 compensation. IRE fields still being manually completed by analyst.</div>
+            <div class="tl-body">Hardship approved. $1,000 compensation. IRE (NFR Event) fields still being manually completed by analyst.</div>
           </div>
         </div>
 
         <div class="tl-row ri ri7" style="padding-bottom:0;">
-          <div class="tl-spine"><div class="tl-dot" style="background:var(--red);"></div></div>
+          <div class="tl-spine"><div class="tl-dot" style="background:var(--amber);"></div></div>
           <div>
             <div class="tl-date">25 Jul 2025</div>
-            <div class="tl-title" style="color:var(--red);">IRExxxx closed — 240 days later</div>
+            <div class="tl-title" style="color:var(--red);">IRExxxx (NFR Event) closed — 240 days later</div>
             <div class="tl-body">Reportability finally determined. ASIC window well and truly missed.</div>
           </div>
         </div>
@@ -465,11 +469,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 
       <div class="gap-card ri ri3">
         <div class="gap-title">✗ Unresolved closure not automatically detected</div>
-        <div class="gap-body">No system flagged that CMOSxxxx was closed without resolution. The IRE event sat with empty fields. Only chance surfaced it.</div>
+        <div class="gap-body">No system flagged that CMOSxxxx was closed without resolution. The IRE (NFR Event) sat with empty fields. Only chance surfaced it.</div>
       </div>
 
       <div class="gap-card ri ri4">
-        <div class="gap-title">✗ IRE fields populated manually — weeks late</div>
+        <div class="gap-title">✗ IRE (NFR Event) fields populated manually — weeks late</div>
         <div class="gap-body">Reportability, root cause, L1/L2, vulnerability, financial loss — all required specialist analyst time. Inconsistent. Too slow for ASIC windows.</div>
       </div>
 
@@ -491,9 +495,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
     <div class="s2-col-hdr"><div class="label" style="color:var(--red);">The cost</div></div>
     <div class="s2-col-body" style="gap:10px;">
 
-      <div class="stat-block ri ri1" style="background:rgba(255,79,106,.07);border-color:rgba(255,79,106,.25);">
-        <div class="stat-big" style="color:var(--red);text-shadow:0 0 28px rgba(255,79,106,.4);">240</div>
-        <div class="stat-sub">days for IRE to close</div>
+      <div class="stat-block ri ri1" style="background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25);">
+        <div class="stat-big" style="color:var(--amber);text-shadow:0 0 18px rgba(245,158,11,.3);">240</div>
+        <div class="stat-sub">days for IRE (NFR Event) to close</div>
       </div>
 
       <div class="stat-block ri ri2" style="background:rgba(255,184,48,.07);border-color:rgba(255,184,48,.25);">
@@ -501,8 +505,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
         <div class="stat-sub">compensation for avoidable failure</div>
       </div>
 
-      <div class="stat-block ri ri3" style="background:rgba(255,79,106,.07);border-color:rgba(255,79,106,.25);">
-        <div class="stat-big" style="color:var(--red);font-size:36px;">14+ days</div>
+      <div class="stat-block ri ri3" style="background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25);">
+        <div class="stat-big" style="color:var(--amber);font-size:36px;">14+ days</div>
         <div class="stat-sub">IDR written response overdue</div>
       </div>
 
@@ -541,26 +545,37 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
   <div style="display:flex;align-items:center;gap:12px;padding:6px 16px;flex-shrink:0;border-bottom:1px solid var(--bdr);">
     <button id="s3-start-btn" onclick="startBatchDemo()" style="
       font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-      padding:5px 20px;border-radius:8px;border:1px solid rgba(0,229,176,.5);
-      background:rgba(0,229,176,.1);color:var(--teal);cursor:pointer;font-weight:600;transition:all .18s;">
+      padding:5px 20px;border-radius:8px;border:1px solid rgba(5,150,105,.5);
+      background:rgba(5,150,105,.08);color:var(--teal);cursor:pointer;font-weight:600;transition:all .18s;">
       ▶ Start Batch Demo
     </button>
     <div id="s3-step-label" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .3s;">
-      ⚡ CMOSxxxx unresolved → IRExxxx created → Sentinel pipeline ready
+      ⚡ CMOSxxxx unresolved → IRExxxx (NFR Event) created → Sentinel pipeline ready
     </div>
     <div id="s3-dots" style="display:flex;gap:4px;align-items:center;flex-shrink:0;"></div>
   </div>
 
-  <!-- SVG diagram — fills all remaining height -->
-  <div style="flex:1;min-height:0;position:relative;overflow:hidden;">
-    <svg id="batchSvg" style="width:100%;height:100%;display:block;" viewBox="0 0 980 340" preserveAspectRatio="xMidYMid meet">
-      <defs>
-        <marker id="b-wh" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(180,200,255,.8)"/></marker>
-        <marker id="b-or" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(231,88,26,.9)"/></marker>
-        <marker id="b-pk" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(255,79,139,.9)"/></marker>
-        <marker id="b-gr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(59,160,16,.9)"/></marker>
-        <marker id="b-pu" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(100,68,212,.9)"/></marker>
-        <marker id="b-te" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(0,200,140,.9)"/></marker>
+  <!-- MAIN GRID: Before | After | Pipeline+Results -->
+  <div style="flex:1;min-height:0;display:grid;grid-template-columns:2fr 1fr 1fr;overflow:hidden;">
+
+    <!-- COL 3: Pipeline SVG (top) + Results strip (bottom) -->
+    <div style="border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;">
+
+      <!-- Pipeline header -->
+      <div style="padding:8px 14px 6px;border-bottom:1px solid var(--bdr);flex-shrink:0;display:flex;align-items:center;gap:8px;background:var(--bg1);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">Batch Execution Pipeline</span>
+      </div>
+
+      <!-- Pipeline SVG fills remaining height -->
+      <div style="flex:1;min-height:0;position:relative;">
+        <svg id="batchSvg" style="width:100%;height:100%;display:block;" viewBox="0 0 980 340" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="b-wh" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(180,200,255,.8)"/></marker>
+          <marker id="b-or" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(231,88,26,.9)"/></marker>
+          <marker id="b-pk" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(255,79,139,.9)"/></marker>
+          <marker id="b-gr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(59,160,16,.9)"/></marker>
+          <marker id="b-pu" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(100,68,212,.9)"/></marker>
+          <marker id="b-te" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="rgba(0,200,140,.9)"/></marker>
         <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 
         <!-- ═══ REAL AWS SERVICE ICON SYMBOLS ═══ -->
@@ -868,77 +883,100 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
         style="filter:drop-shadow(0 0 8px rgba(255,255,255,.85));"/>
 
     </svg>
-  </div>
-  <!-- Output strip — revealed on complete, below diagram -->
-  <div id="s3-output-panel" style="
-    flex-shrink:0;padding:6px 16px 4px;
-    display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
-    opacity:0;transform:translateY(6px);
-    transition:opacity .5s,transform .5s;border-top:1px solid var(--bdr);">
-    <div style="background:var(--bg3);border-radius:6px;padding:7px 11px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Topic Model</div>
-      <div style="font-size:12px;font-weight:700;color:var(--blue);">hardship_request</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--dim);">confidence 0.84 · id 18</div>
-    </div>
-    <div style="background:var(--bg3);border-radius:6px;padding:7px 11px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Complaints</div>
-      <div style="font-size:12px;font-weight:700;color:var(--red);">COMPLAINT</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--dim);">score 0.94 · label=1</div>
-    </div>
-    <div style="background:var(--bg3);border-radius:6px;padding:7px 11px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">NFR Model</div>
-      <div style="font-size:12px;font-weight:700;color:var(--red);">Reportable</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--dim);">p=0.5438 · Human Error</div>
-    </div>
-    <div style="background:rgba(255,79,106,.08);border:1px solid rgba(255,79,106,.3);border-radius:6px;padding:7px 11px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Agentic MDC</div>
-      <div style="font-size:12px;font-weight:700;color:var(--red);">IDR BREACH</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--red);">NEGATIVE · p=0.07 · 2LOD ✓</div>
-    </div>
-  </div>
+      </div><!-- /pipeline svg wrapper -->
 
-  <!-- ── BEFORE / AFTER COMPARISON ── -->
-  <div style="flex-shrink:0;border-top:1px solid var(--bdr);padding:6px 16px 66px;background:rgba(6,12,20,.5);">
-    <div class="label" style="color:var(--muted);margin-bottom:5px;">Before vs After — every gap closed</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr) 1.4fr;gap:6px;">
+      <!-- Results strip — revealed on complete -->
+      <div id="s3-output-panel" style="
+        flex-shrink:0;border-top:1px solid var(--bdr);
+        display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 12px 66px;
+        background:var(--bg1);
+        opacity:0;transform:translateY(6px);
+        transition:opacity .5s,transform .5s;">
+        <div style="background:#fff;border-radius:6px;padding:8px 11px;border:1px solid var(--bdr);box-shadow:0 1px 3px rgba(0,0,0,.05);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Topic Model</div>
+          <div style="font-size:12px;font-weight:700;color:var(--blue);">hardship_request</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--dim);margin-top:2px;">confidence 0.84 · id 18</div>
+        </div>
+        <div style="background:#fff;border-radius:6px;padding:8px 11px;border:1px solid var(--bdr);box-shadow:0 1px 3px rgba(0,0,0,.05);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Complaints</div>
+          <div style="font-size:12px;font-weight:700;color:var(--amber);">COMPLAINT</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--dim);margin-top:2px;">score 0.94 · label=1</div>
+        </div>
+        <div style="background:#fff;border-radius:6px;padding:8px 11px;border:1px solid var(--bdr);box-shadow:0 1px 3px rgba(0,0,0,.05);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">NFR Model</div>
+          <div style="font-size:12px;font-weight:700;color:var(--amber);">Reportable</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--dim);margin-top:2px;">p=0.5438 · Human Error</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid rgba(245,158,11,.35);border-radius:6px;padding:8px 11px;box-shadow:0 1px 3px rgba(245,158,11,.1);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Agentic MDC</div>
+          <div style="font-size:12px;font-weight:700;color:var(--amber);">IDR BREACH</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--amber);margin-top:2px;">NEGATIVE · p=0.07 · 2LOD ✓</div>
+        </div>
+      </div><!-- /results strip -->
 
-      <div style="background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;overflow:hidden;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;height:100%;">
-          <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">IDR breach missed — 14+ days overdue, never tested</div></div>
-          <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">Breach detected same day. Written response issued. ASIC window met.</div></div>
+    </div><!-- /col3 pipeline+results -->
+    <!-- COL 1: Without Sentinel -->
+    <div style="border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;">
+      <div style="padding:8px 14px 6px;background:rgba(245,158,11,.07);border-bottom:1px solid rgba(245,158,11,.2);flex-shrink:0;display:flex;align-items:center;gap:7px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;">Without Sentinel</span>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:8px 12px;display:flex;flex-direction:column;gap:7px;">
+        <div style="background:#fff;border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:3px;">✗ IDR breach undetected</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">No written response issued. Breach surfaced 14+ days later when customer came back.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:3px;">✗ IRE (NFR Event) fields manual &amp; late</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">Specialist hours, inconsistent, weeks to complete reportability &amp; root cause.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:3px;">✗ Complaint by one agent</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">No systematic scoring. If the officer hadn't acted, complaint would never be logged.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:3px;">✗ IRExxxx (NFR Event) open 240 days</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">NFR Event closed 240 days after start. ASIC window missed.</div>
+        </div>
+        <div style="background:rgba(245,158,11,.06);border:1.5px solid rgba(245,158,11,.3);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:3px;">⚡ Caught only by chance</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">One reviewer happened to look. Without that, everything missed.</div>
         </div>
       </div>
-
-      <div style="background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;overflow:hidden;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;height:100%;">
-          <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">IRE fields manually populated — weeks, inconsistent</div></div>
-          <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">All 8 IRE fields in minutes. Reportable flagged. ASIC clock starts.</div></div>
-        </div>
-      </div>
-
-      <div style="background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;overflow:hidden;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;height:100%;">
-          <div class="cmp-before"><div class="cmp-tag" style="color:var(--red);">Before</div><div class="cmp-text">Complaint relied on one agent. IRE open 240 days.</div></div>
-          <div class="cmp-after"><div class="cmp-tag" style="color:var(--teal);">After</div><div class="cmp-text">Every interaction scored. Case resolved next day.</div></div>
-        </div>
-      </div>
-
-      <!-- KEY INSIGHT -->
-      <div style="background:rgba(10,18,32,.9);border:1px solid rgba(255,184,48,.3);border-radius:7px;overflow:hidden;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;height:100%;">
-          <div class="cmp-before" style="background:rgba(255,79,106,.07);">
-            <div class="cmp-tag" style="color:var(--red);">Before — IRExxxx created</div>
-            <div class="cmp-text">Unresolved closure → IRE triggered → 240 days backlog.</div>
-          </div>
-          <div class="cmp-after" style="background:rgba(255,184,48,.08);">
-            <div class="cmp-tag" style="color:var(--gold);">With Sentinel — IRExxxx not required</div>
-            <div class="cmp-text"><strong style="color:var(--gold);">The unresolved closure would never have happened.</strong></div>
-          </div>
-        </div>
-      </div>
-
     </div>
-  </div>
+
+    <!-- COL 2: With Sentinel -->
+    <div style="border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;">
+      <div style="padding:8px 14px 6px;background:rgba(5,150,105,.07);border-bottom:1px solid rgba(5,150,105,.2);flex-shrink:0;display:flex;align-items:center;gap:7px;">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;">With Sentinel</span>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:8px 12px;display:flex;flex-direction:column;gap:7px;">
+        <div style="background:#fff;border:1px solid rgba(5,150,105,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:3px;">✓ IDR breach same day</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">2LOD notified automatically. Written response issued. ASIC window met.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(5,150,105,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:3px;">✓ No NFR Event (IRExxxx) required</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">Case flagged to ops team immediately. Handled with utmost priority — NFR Event would never occur.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(5,150,105,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:3px;">✓ Every interaction scored</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">Complaint 0.94 flagged without agent discretion. 100% coverage.</div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(5,150,105,.2);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:3px;">✓ IRExxxx (NFR Event) not required</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">Resolved next business day. Unresolved closure would never have happened.</div>
+        </div>
+        <div style="background:rgba(5,150,105,.07);border:1.5px solid rgba(5,150,105,.3);border-radius:7px;padding:9px 12px;">
+          <div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:3px;">✓ Caught by design</div>
+          <div style="font-size:11px;color:var(--dim);line-height:1.5;">Sentinel processes every conversation. Systematic, consistent, independent.</div>
+        </div>
+      </div>
+    </div>
+
+
+  </div><!-- /main grid -->
 
 </div><!-- /main flex -->
 </div>
@@ -955,32 +993,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
 
 
 <script>
-// ── STAR FIELD ──
-const cvs=document.getElementById('bg');
-const ctx=cvs.getContext('2d');
-let stars=[];
-function initBg(){
-  cvs.width=innerWidth;cvs.height=innerHeight;
-  stars=Array.from({length:160},()=>({
-    x:Math.random()*cvs.width,y:Math.random()*cvs.height,
-    r:Math.random()*1.1+.2,a:Math.random(),
-    da:(.002+Math.random()*.003)*(Math.random()>.5?1:-1)
-  }));
-}
-function drawBg(){
-  ctx.clearRect(0,0,cvs.width,cvs.height);
-  const g=ctx.createRadialGradient(cvs.width*.25,cvs.height*.35,0,cvs.width*.25,cvs.height*.35,cvs.width*.45);
-  g.addColorStop(0,'rgba(25,45,110,.05)');g.addColorStop(1,'transparent');
-  ctx.fillStyle=g;ctx.fillRect(0,0,cvs.width,cvs.height);
-  stars.forEach(s=>{
-    s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;
-    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(160,190,255,${s.a*.35})`;ctx.fill();
-  });
-  requestAnimationFrame(drawBg);
-}
-initBg();drawBg();
-window.addEventListener('resize',initBg);
+// ── STAR FIELD DISABLED (white background) ──
+function initBg(){}
+function drawBg(){}
 
 // ── CONVERSATION ──
 const MSGS=[
@@ -1055,7 +1070,7 @@ const BATCH_STEPS = [
   { node:'bn0',  arrow:null,   pkt:null,
     label:'External Source — NFR + LivePerson raw data from on-prem', outputs:[] },
   { node:'bn1',  arrow:'ba0',  pkt:{from:[84,86],to:[84,120]},
-    label:'PII Masking + Anonymisation — strip PII, hash IDs, CMOSxxxx · IRExxxx', outputs:[], arrowLabel:'ba1-lbl' },
+    label:'PII Masking + Anonymisation — strip PII, hash IDs, CMOSxxxx · IRExxxx (NFR Event)', outputs:[], arrowLabel:'ba1-lbl' },
   { node:'bn2',  arrow:'ba1',  pkt:{from:[148,148],to:[190,148]},
     label:'S3 Inbound — anonymised encrypted files arrive in AWS S3', outputs:[], arrowLabel:'ba2-lbl' },
   { node:'bn3',  arrow:'ba2',  pkt:{from:[290,148],to:[334,148]},
@@ -1088,7 +1103,7 @@ function resetBatchDemo(){
   const dots=document.getElementById('s3-dots');
   if(dots)[...dots.children].forEach(d=>{d.style.background='var(--muted)';d.style.transform='scale(1)';});
   const lbl=document.getElementById('s3-step-label');
-  if(lbl){lbl.textContent='⚡ CMOSxxxx unresolved → IRExxxx created → Sentinel pipeline ready';lbl.style.color='var(--muted)';}
+  if(lbl){lbl.textContent='⚡ CMOSxxxx unresolved → IRExxxx (NFR Event) created → Sentinel pipeline ready';lbl.style.color='var(--muted)';}
   const btn=document.getElementById('s3-start-btn');
   if(btn){btn.textContent='▶ Start Batch Demo';btn.style.opacity='1';btn.disabled=false;}
 }
