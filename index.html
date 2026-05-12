@@ -617,327 +617,251 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg0);color:var
       ═══ -->
 
       <!-- Region: On-Prem -->
-      <rect x="8" y="8" width="152" height="325" rx="8"
+      <rect x="8" y="34" width="152" height="285" rx="8"
         fill="none" stroke="rgba(110,127,160,.2)" stroke-dasharray="4,3" stroke-width="1"/>
-      <text x="84" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="8" fill="rgba(110,127,160,.5)" letter-spacing=".5">ON-PREM</text>
+      <text x="84" y="30" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="8" fill="rgba(110,127,160,.45)" letter-spacing=".5">ON-PREM</text>
 
-      <!-- Region: AWS -->
-      <rect x="166" y="8" width="810" height="325" rx="8"
-        fill="none" stroke="rgba(255,144,50,.15)" stroke-dasharray="5,4" stroke-width="1"/>
-      <text x="571" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="8" fill="rgba(255,144,50,.4)" letter-spacing=".5">AWS · ap-southeast-2</text>
+      <!-- Region: AWS ap-southeast-2 — highlighted with ECC title -->
+      <rect x="166" y="8" width="810" height="326" rx="10"
+        fill="rgba(255,144,50,.03)" stroke="rgba(255,144,50,.55)" stroke-width="1.8"/>
+      <!-- glow effect -->
+      <rect x="166" y="8" width="810" height="326" rx="10"
+        fill="none" stroke="rgba(255,144,50,.15)" stroke-width="6"/>
+      <!-- AWS badge top-left -->
+      <rect x="174" y="14" width="92" height="18" rx="4"
+        fill="rgba(255,144,50,.15)" stroke="rgba(255,144,50,.35)" stroke-width="1"/>
+      <text x="220" y="27" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="8" fill="rgba(255,144,50,.85)" letter-spacing=".4">AWS · ap-southeast-2</text>
+      <!-- Enterprise Customer Care Insights title -->
+      <text x="571" y="26" text-anchor="middle" font-family="Outfit,sans-serif"
+        font-size="11" font-weight="700" fill="rgba(255,200,100,.9)" letter-spacing=".5">Enterprise Customer Care Insights</text>
 
       <!-- ── ARROWS ── -->
-      <!-- 1. Source → PII Masking -->
+      <!-- 1. Source → PII Masking (vertical, within on-prem) -->
       <line id="ba0" x1="84" y1="88" x2="84" y2="116"
         stroke="rgba(180,200,255,.7)" stroke-width="2" stroke-dasharray="5,4"
         marker-end="url(#b-wh)" opacity="0" style="transition:opacity .4s"/>
 
-      <!-- 2. PII Masking → S3 -->
-      <line id="ba1" x1="148" y1="152" x2="192" y2="152"
+      <!-- 2. PII Masking → S3 (horizontal crossing boundary) -->
+      <line id="ba1" x1="150" y1="148" x2="188" y2="148"
         stroke="rgba(180,200,255,.65)" stroke-width="2" stroke-dasharray="5,4"
         marker-end="url(#b-wh)" opacity="0" style="transition:opacity .4s"/>
-      <text id="ba1-lbl" x="170" y="145" text-anchor="middle"
-        font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(255,184,48,.6)"
+      <text id="ba1-lbl" x="169" y="143" text-anchor="middle"
+        font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,184,48,.7)"
         opacity="0" style="transition:opacity .4s">anonymised</text>
 
       <!-- 3. S3 → Lambda -->
-      <line id="ba2" x1="292" y1="152" x2="336" y2="152"
+      <line id="ba2" x1="292" y1="148" x2="332" y2="148"
         stroke="rgba(231,88,26,.75)" stroke-width="2" stroke-dasharray="5,4"
         marker-end="url(#b-or)" opacity="0" style="transition:opacity .4s"/>
-      <text id="ba2-lbl" x="314" y="145" text-anchor="middle"
-        font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(231,88,26,.6)"
+      <text id="ba2-lbl" x="312" y="143" text-anchor="middle"
+        font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(231,88,26,.7)"
         opacity="0" style="transition:opacity .4s">S3 event</text>
 
-      <!-- 4. Lambda → Complaints (down-left) -->
-      <path id="ba3" d="M408,178 L408,200 L309,200 L309,218"
-        stroke="rgba(255,79,139,.7)" stroke-width="2" stroke-dasharray="5,4"
-        fill="none" marker-end="url(#b-pk)" opacity="0" style="transition:opacity .4s"/>
+      <!-- 4. Lambda → Model Execution -->
+      <path id="ba3" d="M434,170 L434,206"
+        stroke="rgba(150,150,255,.7)" stroke-width="2" stroke-dasharray="5,4"
+        fill="none" marker-end="url(#b-wh)" opacity="0" style="transition:opacity .4s"/>
+      <text id="ba5-lbl" x="474" y="192" text-anchor="middle"
+        font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(180,180,255,.6)"
+        opacity="0" style="transition:opacity .4s">fan-out</text>
 
-      <!-- 5. Lambda → NFR (straight down) -->
-      <line id="ba4" x1="408" y1="178" x2="408" y2="218"
-        stroke="rgba(79,160,255,.7)" stroke-width="2" stroke-dasharray="5,4"
-        marker-end="url(#b-wh)" opacity="0" style="transition:opacity .4s"/>
+      <!-- 5+6. unused -->
+      <line id="ba4" x1="0" y1="0" x2="0" y2="0" opacity="0"/>
+      <line id="ba5" x1="0" y1="0" x2="0" y2="0" opacity="0"/>
 
-      <!-- 6. Lambda → GenAI (down-right) -->
-      <path id="ba5" d="M408,178 L408,200 L520,200 L520,218"
-        stroke="rgba(0,200,140,.7)" stroke-width="2" stroke-dasharray="5,4"
-        fill="none" marker-end="url(#b-te)" opacity="0" style="transition:opacity .4s"/>
-      <text id="ba5-lbl" x="408" y="196" text-anchor="middle"
-        font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(180,200,255,.5)"
-        opacity="0" style="transition:opacity .4s">fan-out · 3 parallel paths</text>
-
-      <!-- 7. NFR → Bedrock -->
-      <line id="ba6" x1="408" y1="280" x2="476" y2="298"
-        stroke="rgba(1,168,141,.7)" stroke-width="1.8" stroke-dasharray="5,4"
+      <!-- 7. Model Execution → Bedrock -->
+      <line id="ba6" x1="460" y1="262" x2="460" y2="270"
+        stroke="rgba(1,168,141,.75)" stroke-width="2" stroke-dasharray="5,4"
         marker-end="url(#b-te)" opacity="0" style="transition:opacity .4s"/>
-
-      <!-- 8. GenAI → Bedrock -->
-      <line id="ba7" x1="530" y1="280" x2="530" y2="298"
-        stroke="rgba(1,168,141,.7)" stroke-width="1.8" stroke-dasharray="5,4"
-        marker-end="url(#b-te)" opacity="0" style="transition:opacity .4s"/>
-      <text id="ba7-lbl" x="530" y="294" text-anchor="middle"
-        font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(1,168,141,.6)"
+      <text id="ba7-lbl" x="515" y="267" text-anchor="middle"
+        font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(1,168,141,.65)"
         opacity="0" style="transition:opacity .4s">Bedrock inference</text>
 
-      <!-- 9. All outputs → HashiCorp Vault -->
-      <path id="ba8" d="M310,284 L310,336 L686,336 L686,282"
+      <!-- 8. unused -->
+      <line id="ba7" x1="0" y1="0" x2="0" y2="0" opacity="0"/>
+
+      <!-- 9. Bedrock → Vault (right, clear of nodes) -->
+      <path id="ba8" d="M647,291 L712,291 L712,248 L658,248"
         stroke="rgba(192,122,255,.65)" stroke-width="2" stroke-dasharray="5,4"
         fill="none" marker-end="url(#b-pu)" opacity="0" style="transition:opacity .4s"/>
-      <text id="ba8-lbl" x="490" y="332" text-anchor="middle"
-        font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(192,122,255,.55)"
-        opacity="0" style="transition:opacity .4s">all model outputs → encrypt</text>
+      <text id="ba8-lbl" x="712" y="268" text-anchor="middle"
+        font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(192,122,255,.6)"
+        opacity="0" style="transition:opacity .4s">encrypt</text>
 
       <!-- 10. Vault → S3 Outputs -->
-      <line id="ba9" x1="778" y1="252" x2="820" y2="252"
+      <line id="ba9" x1="768" y1="248" x2="812" y2="248"
         stroke="rgba(231,88,26,.7)" stroke-width="2" stroke-dasharray="5,4"
         marker-end="url(#b-or)" opacity="0" style="transition:opacity .4s"/>
-      <text id="ba9-lbl" x="799" y="245" text-anchor="middle"
-        font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(192,122,255,.6)"
+      <text id="ba9-lbl" x="790" y="243" text-anchor="middle"
+        font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(192,122,255,.6)"
         opacity="0" style="transition:opacity .4s">ADP encrypted</text>
 
-      <!-- 11. S3 Outputs → Lambda daily -->
-      <line id="ba10" x1="920" y1="252" x2="950" y2="252"
-        stroke="rgba(231,88,26,.7)" stroke-width="2" stroke-dasharray="5,4"
-        marker-end="url(#b-or)" opacity="0" style="transition:opacity .4s"/>
-
-      <!-- 12. Lambda → back to On-Prem -->
-      <path id="ba11" d="M970,230 L970,18 L84,18 L84,36"
-        stroke="rgba(180,200,255,.5)" stroke-width="1.8" stroke-dasharray="5,4"
-        fill="none" marker-end="url(#b-wh)" opacity="0" style="transition:opacity .4s"/>
-      <text id="ba11-lbl" x="527" y="15" text-anchor="middle"
-        font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(180,200,255,.5)"
-        opacity="0" style="transition:opacity .4s">→ On-Prem analysis</text>
+      <!-- ba10 / ba11 — removed (S3 is final node) -->
+      <line id="ba10" x1="0" y1="0" x2="0" y2="0" opacity="0"/>
+      <line id="ba11" x1="0" y1="0" x2="0" y2="0" opacity="0"/>
 
       <!-- ══ NODES ══ -->
 
       <!-- bn0: External Source -->
       <g id="bn0" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <rect x="18" y="34" width="132" height="50" rx="8"
+        <rect x="18" y="44" width="132" height="42" rx="8"
           fill="rgba(5,10,20,.94)" stroke="rgba(110,127,160,.45)" stroke-width="1.4"/>
-        <rect x="18" y="34" width="132" height="4" rx="2" fill="#6e7fa0" opacity=".9"/>
-        <rect x="24" y="44" width="26" height="26" rx="6" fill="#3a4a60"/>
-        <ellipse cx="37" cy="51" rx="8" ry="2.8" fill="white" opacity=".8"/>
-        <rect x="29" y="51" width="16" height="10" fill="white" opacity=".32"/>
-        <ellipse cx="37" cy="61" rx="8" ry="2.8" fill="white" opacity=".7"/>
-        <line x1="29" y1="51" x2="29" y2="61" stroke="white" stroke-width="1" opacity=".6"/>
-        <line x1="45" y1="51" x2="45" y2="61" stroke="white" stroke-width="1" opacity=".6"/>
-        <text x="98" y="50" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8" fill="rgba(180,200,255,.9)">External Source</text>
-        <text x="98" y="62" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10" fill="#dde6f5" font-weight="600">NFR · LivePerson</text>
-        <text x="98" y="74" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(110,127,160,.65)">raw source data</text>
+        <rect x="18" y="44" width="132" height="4" rx="2" fill="#6e7fa0"/>
+        <rect x="24" y="54" width="24" height="24" rx="5" fill="#3a4a60"/>
+        <ellipse cx="36" cy="60" rx="7" ry="2.4" fill="white" opacity=".8"/>
+        <rect x="29" y="60" width="14" height="9" fill="white" opacity=".3"/>
+        <ellipse cx="36" cy="69" rx="7" ry="2.4" fill="white" opacity=".7"/>
+        <line x1="29" y1="60" x2="29" y2="69" stroke="white" stroke-width="1" opacity=".6"/>
+        <line x1="43" y1="60" x2="43" y2="69" stroke="white" stroke-width="1" opacity=".6"/>
+        <text x="100" y="62" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(180,200,255,.8)">External Source</text>
+        <text x="100" y="76" text-anchor="middle" font-family="Outfit,sans-serif"
+          font-size="11" fill="#dde6f5" font-weight="600">NFR · LivePerson</text>
       </g>
 
-      <!-- bn1: PII Masking + Anonymisation -->
+      <!-- bn1: PII Masking -->
       <g id="bn1" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <rect x="18" y="116" width="132" height="72" rx="8"
+        <rect x="18" y="120" width="132" height="42" rx="8"
           fill="rgba(5,10,20,.94)" stroke="rgba(255,184,48,.55)" stroke-width="1.5"/>
-        <rect x="18" y="116" width="132" height="4" rx="2" fill="#FFB830" opacity=".95"/>
-        <rect x="24" y="126" width="28" height="28" rx="6" fill="#8B6500"/>
-        <text x="38" y="145" text-anchor="middle" font-size="16">🔒</text>
-        <text x="98" y="133" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8.5" fill="rgba(255,184,48,.9)">PII Masking</text>
-        <text x="98" y="145" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10.5" fill="#dde6f5" font-weight="700">Anonymisation</text>
-        <text x="98" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(255,184,48,.65)">strip PII · mask IDs</text>
-        <text x="98" y="168" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(255,184,48,.55)">CMOSxxxx · IRExxxx</text>
-        <text x="98" y="179" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(255,184,48,.5)">hash customer IDs</text>
+        <rect x="18" y="120" width="132" height="4" rx="2" fill="#FFB830"/>
+        <rect x="24" y="130" width="24" height="24" rx="5" fill="#8B6500"/>
+        <text x="36" y="147" text-anchor="middle" font-size="14">🔒</text>
+        <text x="100" y="138" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(255,184,48,.85)">PII Masking</text>
+        <text x="100" y="152" text-anchor="middle" font-family="Outfit,sans-serif"
+          font-size="11" fill="#dde6f5" font-weight="600">Anonymisation</text>
       </g>
 
       <!-- bn2: Amazon S3 Inbound -->
       <g id="bn2" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-s3" x="197" y="129" width="34" height="34"/>
-        <rect x="190" y="122" width="102" height="60" rx="8"
+        <use href="#icon-s3" x="196" y="132" width="30" height="30"/>
+        <rect x="190" y="126" width="100" height="42" rx="8"
           fill="rgba(5,10,20,.94)" stroke="rgba(59,160,16,.5)" stroke-width="1.5"/>
-        <rect x="190" y="122" width="102" height="4" rx="2" fill="#3B9010" opacity=".95"/>
-        <rect x="196" y="132" width="28" height="28" rx="7" fill="#267010"/>
-        <ellipse cx="210" cy="139" rx="8" ry="2.8" fill="white" opacity=".85"/>
-        <path d="M202,139 L203,154 Q210,156 217,154 L218,139"
-          fill="none" stroke="white" stroke-width="1.5" opacity=".8"/>
-        <ellipse cx="210" cy="154" rx="7" ry="2.4" fill="white" opacity=".65"/>
-        <text x="244" y="138" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8" fill="rgba(100,210,60,.9)">Amazon S3</text>
-        <text x="244" y="150" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10" fill="#dde6f5" font-weight="600">S3 Inbound</text>
-        <text x="244" y="162" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(100,210,60,.6)">encrypted · Vault</text>
-        <text x="244" y="172" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(100,210,60,.55)">S3 event triggers λ</text>
+        <rect x="190" y="126" width="100" height="4" rx="2" fill="#3B9010"/>
+        <rect x="196" y="136" width="24" height="24" rx="6" fill="#267010"/>
+        <ellipse cx="208" cy="142" rx="7" ry="2.4" fill="white" opacity=".85"/>
+        <path d="M201,142 L202,154 Q208,156 214,154 L215,142"
+          fill="none" stroke="white" stroke-width="1.4" opacity=".8"/>
+        <ellipse cx="208" cy="154" rx="6" ry="2" fill="white" opacity=".65"/>
+        <text x="244" y="140" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(100,210,60,.85)">Amazon S3</text>
+        <text x="244" y="154" text-anchor="middle" font-family="Outfit,sans-serif"
+          font-size="11" fill="#dde6f5" font-weight="600">S3 Inbound</text>
       </g>
 
-      <!-- bn3: Lambda — unzip + fan-out trigger -->
+      <!-- bn3: Lambda trigger -->
       <g id="bn3" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-lambda" x="342" y="129" width="34" height="34"/>
-        <rect x="336" y="122" width="102" height="60" rx="8"
+        <use href="#icon-lambda" x="340" y="132" width="30" height="30"/>
+        <rect x="334" y="126" width="100" height="42" rx="8"
           fill="rgba(5,10,20,.94)" stroke="rgba(231,88,26,.55)" stroke-width="1.5"/>
-        <rect x="336" y="122" width="102" height="4" rx="2" fill="#E7581A" opacity=".95"/>
-        <rect x="342" y="132" width="28" height="28" rx="7" fill="#C05215"/>
-        <text x="356" y="152" text-anchor="middle" font-family="serif"
-          font-size="19" font-weight="bold" fill="white" opacity=".95">λ</text>
-        <text x="390" y="138" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8" fill="rgba(231,88,26,.9)">AWS Lambda</text>
-        <text x="390" y="150" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10" fill="#dde6f5" font-weight="600">Unzip · Trigger</text>
-        <text x="390" y="162" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(231,88,26,.65)">creates SQS events</text>
-        <text x="390" y="172" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(231,88,26,.55)">3 parallel queues</text>
+        <rect x="334" y="126" width="100" height="4" rx="2" fill="#E7581A"/>
+        <rect x="340" y="136" width="24" height="24" rx="6" fill="#C05215"/>
+        <text x="352" y="153" text-anchor="middle" font-family="serif"
+          font-size="16" font-weight="bold" fill="white" opacity=".95">λ</text>
+        <text x="388" y="140" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(231,88,26,.85)">AWS Lambda</text>
+        <text x="388" y="154" text-anchor="middle" font-family="Outfit,sans-serif"
+          font-size="11" fill="#dde6f5" font-weight="600">Unzip · Fan-out</text>
       </g>
 
-      <!-- bn4: ECS — Complaints Model -->
+      <!-- bn4: MODEL EXECUTION (merged — Complaints + NFR + Agentic MDC) -->
       <g id="bn4" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-ecs" x="256" y="225" width="28" height="28"/>
-        <rect x="250" y="218" width="118" height="62" rx="8"
-          fill="rgba(5,10,20,.94)" stroke="rgba(255,79,139,.55)" stroke-width="1.5"/>
-        <rect x="250" y="218" width="118" height="4" rx="2" fill="#E7157B" opacity=".95"/>
-        <rect x="256" y="228" width="24" height="24" rx="5" fill="#8B0050"/>
-        <rect x="259" y="231" width="18" height="18" rx="2.5"
-          fill="none" stroke="white" stroke-width="1.2" opacity=".85"/>
-        <polyline points="259,239 268,244 277,239"
-          fill="none" stroke="white" stroke-width="1.1" opacity=".8"/>
-        <text x="322" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(255,79,139,.9)">ECS · Complaints</text>
-        <text x="322" y="246" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10" fill="#dde6f5" font-weight="600">Complaints Model</text>
-        <text x="322" y="257" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(255,79,139,.65)">BiLSTM · 5 models</text>
-        <text x="322" y="268" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(255,79,139,.6)">Topic LDA · 562 patterns</text>
-        <text x="322" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8" fill="rgba(255,79,106,.92)" id="bn4-out1" opacity="0">COMPLAINT 0.94</text>
+        <!-- outer container -->
+        <rect x="240" y="208" width="390" height="52" rx="9"
+          fill="rgba(5,10,20,.94)" stroke="rgba(150,150,255,.45)" stroke-width="1.5"/>
+        <rect x="240" y="208" width="390" height="4" rx="2" fill="rgba(150,150,255,.7)"/>
+        <text x="435" y="220" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="7" fill="rgba(180,180,255,.6)" letter-spacing=".5">MODEL EXECUTION</text>
+
+        <!-- Complaints Topic box -->
+        <rect x="248" y="222" width="114" height="30" rx="7"
+          fill="rgba(5,10,20,.92)" stroke="rgba(255,79,139,.5)" stroke-width="1.3"/>
+        <rect x="248" y="222" width="114" height="3" rx="1.5" fill="#E7157B" opacity=".9"/>
+        <rect x="252" y="228" width="20" height="20" rx="4" fill="#8B0050"/>
+        <rect x="254" y="230" width="16" height="16" rx="2"
+          fill="none" stroke="white" stroke-width="1.1" opacity=".85"/>
+        <polyline points="254,237 262,241 270,237"
+          fill="none" stroke="white" stroke-width="1" opacity=".8"/>
+        <text x="308" y="241" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(255,79,139,.9)">Complaints Topic</text>
+
+        <!-- NFR Model box -->
+        <rect x="370" y="222" width="114" height="30" rx="7"
+          fill="rgba(5,10,20,.92)" stroke="rgba(79,160,255,.5)" stroke-width="1.3"/>
+        <rect x="370" y="222" width="114" height="3" rx="1.5" fill="#4F8EFF" opacity=".9"/>
+        <rect x="374" y="228" width="20" height="20" rx="4" fill="#1A3A7A"/>
+        <rect x="376" y="230" width="16" height="16" rx="2"
+          fill="none" stroke="white" stroke-width="1.1" opacity=".85"/>
+        <polyline points="376,237 384,241 392,237"
+          fill="none" stroke="white" stroke-width="1" opacity=".8"/>
+        <text x="430" y="241" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(79,160,255,.9)">NFR Model</text>
+
+        <!-- Agentic MDC box -->
+        <rect x="492" y="222" width="130" height="30" rx="7"
+          fill="rgba(5,10,20,.92)" stroke="rgba(0,229,176,.5)" stroke-width="1.3"/>
+        <rect x="492" y="222" width="130" height="3" rx="1.5" fill="#00C88C" opacity=".9"/>
+        <rect x="496" y="228" width="20" height="20" rx="4" fill="#006848"/>
+        <rect x="498" y="230" width="16" height="16" rx="2"
+          fill="none" stroke="white" stroke-width="1.1" opacity=".85"/>
+        <polyline points="498,237 506,241 514,237"
+          fill="none" stroke="white" stroke-width="1" opacity=".8"/>
+        <text x="564" y="241" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(0,229,176,.9)">Agentic MDC</text>
       </g>
 
-      <!-- bn5: ECS — NFR Model + Bedrock -->
-      <g id="bn5" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-ecs" x="378" y="225" width="28" height="28"/>
-        <rect x="372" y="218" width="118" height="62" rx="8"
-          fill="rgba(5,10,20,.94)" stroke="rgba(79,160,255,.55)" stroke-width="1.5"/>
-        <rect x="372" y="218" width="118" height="4" rx="2" fill="#4F8EFF" opacity=".95"/>
-        <rect x="378" y="228" width="24" height="24" rx="5" fill="#1A3A7A"/>
-        <rect x="381" y="231" width="18" height="18" rx="2.5"
-          fill="none" stroke="white" stroke-width="1.2" opacity=".85"/>
-        <polyline points="381,239 390,244 399,239"
-          fill="none" stroke="white" stroke-width="1.1" opacity=".8"/>
-        <text x="444" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(79,160,255,.9)">ECS · NFR Model</text>
-        <text x="444" y="246" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10" fill="#dde6f5" font-weight="600">NFR Model</text>
-        <text x="444" y="257" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(79,160,255,.65)">8 sub-models · IRE</text>
-        <text x="444" y="268" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(1,168,141,.7)">→ Bedrock inference</text>
-        <text x="444" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8" fill="rgba(0,229,176,.9)" id="bn5-out1" opacity="0">Reportable 0.54</text>
-      </g>
-
-      <!-- bn6: ECS — Generative AI / Agentic MDC + Bedrock -->
-      <g id="bn6" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-ecs" x="498" y="225" width="28" height="28"/>
-        <rect x="492" y="218" width="120" height="62" rx="8"
-          fill="rgba(5,10,20,.94)" stroke="rgba(0,229,176,.55)" stroke-width="1.5"/>
-        <rect x="492" y="218" width="120" height="4" rx="2" fill="#00C88C" opacity=".95"/>
-        <rect x="498" y="228" width="24" height="24" rx="5" fill="#006848"/>
-        <rect x="501" y="231" width="18" height="18" rx="2.5"
-          fill="none" stroke="white" stroke-width="1.2" opacity=".85"/>
-        <polyline points="501,239 510,244 519,239"
-          fill="none" stroke="white" stroke-width="1.1" opacity=".8"/>
-        <text x="562" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(0,229,176,.9)">ECS · Generative AI</text>
-        <text x="562" y="246" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10" fill="#dde6f5" font-weight="600">GenAI Models</text>
-        <text x="562" y="257" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(0,229,176,.65)">Agentic MDC · IDR</text>
-        <text x="562" y="268" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(1,168,141,.7)">→ Bedrock inference</text>
-        <text x="562" y="279" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8" fill="rgba(255,184,48,.92)" id="bn6-out1" opacity="0">IDR BREACH p=0.07</text>
-      </g>
-
-      <!-- bn7: Amazon Bedrock (shared inference) -->
+      <!-- bn7: Amazon Bedrock — centred under model execution box -->
       <g id="bn7" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-bedrock" x="454" y="304" width="28" height="28"/>
-        <rect x="448" y="298" width="120" height="44" rx="8"
+        <use href="#icon-bedrock" x="389" y="278" width="28" height="28"/>
+        <rect x="383" y="272" width="264" height="40" rx="8"
           fill="rgba(0,30,26,.96)" stroke="rgba(1,168,141,.65)" stroke-width="1.8"/>
-        <rect x="448" y="298" width="120" height="4" rx="2" fill="#01A88D" opacity=".95"/>
-        <rect x="454" y="308" width="24" height="24" rx="5" fill="#006655"/>
-        <polygon points="466,312 473,317 466,322 459,317"
-          fill="none" stroke="white" stroke-width="1.4" opacity=".9"/>
-        <polygon points="466,314 471,317 466,320 461,317"
+        <rect x="383" y="272" width="264" height="4" rx="2" fill="#01A88D" opacity=".95"/>
+        <rect x="389" y="282" width="22" height="22" rx="5" fill="#006655"/>
+        <polygon points="400,286 406,291 400,296 394,291"
+          fill="none" stroke="white" stroke-width="1.3" opacity=".9"/>
+        <polygon points="400,288 404,291 400,294 396,291"
           fill="white" opacity=".65"/>
-        <text x="508" y="314" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        <text x="515" y="289" text-anchor="middle" font-family="JetBrains Mono,monospace"
           font-size="8.5" fill="rgba(1,200,140,.95)">Amazon Bedrock</text>
-        <text x="508" y="325" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="9.5" fill="#dde6f5" font-weight="700">Bedrock Inference</text>
-        <text x="508" y="336" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(1,168,141,.65)">claude-sonnet-4-5</text>
-        <text x="508" y="337" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(255,79,106,.85)" id="bn7-out" opacity="0">NEGATIVE · p=0.07</text>
+        <text x="515" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(1,168,141,.8)">claude-sonnet-4-5</text>
       </g>
 
-      <!-- bn8: HashiCorp Vault ADP Encryption -->
+      <!-- bn8: HashiCorp Vault ADP -->
       <g id="bn8" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <rect x="636" y="222" width="118" height="60" rx="8"
+        <rect x="656" y="226" width="110" height="42" rx="8"
           fill="rgba(5,10,20,.94)" stroke="rgba(192,122,255,.55)" stroke-width="1.5"/>
-        <rect x="636" y="222" width="118" height="4" rx="2" fill="#c07aff" opacity=".95"/>
-        <rect x="642" y="232" width="28" height="28" rx="6" fill="#5A1E9A"/>
-        <!-- HashiCorp Vault triangle -->
-        <polygon points="656,236 664,254 648,254"
-          fill="none" stroke="white" stroke-width="1.6" opacity=".9"/>
-        <polygon points="656,241 661,252 651,252"
+        <rect x="656" y="226" width="110" height="4" rx="2" fill="#c07aff"/>
+        <rect x="662" y="236" width="24" height="24" rx="5" fill="#5A1E9A"/>
+        <polygon points="674,240 681,256 667,256"
+          fill="none" stroke="white" stroke-width="1.5" opacity=".9"/>
+        <polygon points="674,244 679,254 669,254"
           fill="white" opacity=".5"/>
-        <text x="706" y="238" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8.5" fill="rgba(192,122,255,.9)">HashiCorp Vault</text>
-        <text x="706" y="250" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10.5" fill="#dde6f5" font-weight="700">ADP Encrypt</text>
-        <text x="706" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(192,122,255,.65)">Vault Transit ADP</text>
-        <text x="706" y="273" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(192,122,255,.55)">encrypt all outputs</text>
+        <text x="718" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(192,122,255,.85)">HashiCorp Vault</text>
+        <text x="718" y="256" text-anchor="middle" font-family="Outfit,sans-serif"
+          font-size="11" fill="#dde6f5" font-weight="600">ADP Encrypt</text>
       </g>
 
       <!-- bn9: Amazon S3 Outputs -->
       <g id="bn9" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-s3" x="826" y="230" width="34" height="34"/>
-        <rect x="820" y="222" width="102" height="60" rx="8"
+        <use href="#icon-s3" x="820" y="232" width="30" height="30"/>
+        <rect x="814" y="226" width="100" height="42" rx="8"
           fill="rgba(5,10,20,.94)" stroke="rgba(59,160,16,.5)" stroke-width="1.5"/>
-        <rect x="820" y="222" width="102" height="4" rx="2" fill="#3B9010" opacity=".95"/>
-        <rect x="826" y="232" width="28" height="28" rx="7" fill="#267010"/>
-        <ellipse cx="840" cy="239" rx="8" ry="2.8" fill="white" opacity=".85"/>
-        <path d="M832,239 L833,254 Q840,256 847,254 L848,239"
-          fill="none" stroke="white" stroke-width="1.5" opacity=".8"/>
-        <ellipse cx="840" cy="254" rx="7" ry="2.4" fill="white" opacity=".65"/>
-        <text x="876" y="238" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="8" fill="rgba(100,210,60,.9)">Amazon S3</text>
-        <text x="876" y="250" text-anchor="middle" font-family="Outfit,sans-serif"
-          font-size="10" fill="#dde6f5" font-weight="600">S3 Outputs</text>
-        <text x="876" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(100,210,60,.6)">ADP-encrypted</text>
-        <text x="876" y="273" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7.5" fill="rgba(100,210,60,.55)">all model results</text>
+        <rect x="814" y="226" width="100" height="4" rx="2" fill="#3B9010"/>
+        <rect x="820" y="236" width="24" height="24" rx="6" fill="#267010"/>
+        <ellipse cx="832" cy="242" rx="7" ry="2.4" fill="white" opacity=".85"/>
+        <path d="M825,242 L826,254 Q832,256 838,254 L839,242"
+          fill="none" stroke="white" stroke-width="1.4" opacity=".8"/>
+        <ellipse cx="832" cy="254" rx="6" ry="2" fill="white" opacity=".65"/>
+        <text x="866" y="240" text-anchor="middle" font-family="JetBrains Mono,monospace"
+          font-size="8" fill="rgba(100,210,60,.85)">Amazon S3</text>
+        <text x="866" y="254" text-anchor="middle" font-family="Outfit,sans-serif"
+          font-size="11" fill="#dde6f5" font-weight="600">S3 Outputs</text>
       </g>
 
-      <!-- bn10: Lambda Daily Job (post-process → on-prem) -->
-      <g id="bn10" style="opacity:.2;transition:opacity .45s,filter .45s;">
-        <use href="#icon-lambda" x="938" y="228" width="26" height="26"/>
-        <rect x="932" y="222" width="44" height="60" rx="8"
-          fill="rgba(5,10,20,.94)" stroke="rgba(231,88,26,.55)" stroke-width="1.5"/>
-        <rect x="932" y="222" width="44" height="4" rx="2" fill="#E7581A" opacity=".95"/>
-        <rect x="937" y="232" width="24" height="24" rx="5" fill="#C05215"/>
-        <text x="949" y="250" text-anchor="middle" font-family="serif"
-          font-size="17" font-weight="bold" fill="white" opacity=".95">λ</text>
-        <text x="954" y="260" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7" fill="rgba(231,88,26,.85)">Daily</text>
-        <text x="954" y="269" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="7" fill="rgba(231,88,26,.75)">flatten</text>
-        <text x="954" y="278" text-anchor="middle" font-family="JetBrains Mono,monospace"
-          font-size="6.5" fill="rgba(231,88,26,.6)">→ prem</text>
-      </g>
 
       <!-- DATA PACKET -->
       <circle id="bPkt" r="5.5" fill="rgba(255,255,255,.94)" opacity="0"
@@ -1129,39 +1053,33 @@ document.getElementById('sno').textContent = '1 / '+N;
 // ── BATCH DEMO ──
 const BATCH_STEPS = [
   { node:'bn0',  arrow:null,   pkt:null,
-    label:'External Source — NFR + LivePerson raw data from on-prem systems', outputs:[] },
-  { node:'bn1',  arrow:'ba0',  pkt:{from:[84,88],to:[84,116]},
-    label:'PII Masking + Anonymisation — strip PII, hash IDs → CMOSxxxx · IRExxxx', outputs:[], arrowLabel:'ba1-lbl' },
-  { node:'bn2',  arrow:'ba1',  pkt:{from:[148,152],to:[192,152]},
-    label:'S3 Inbound — anonymised encrypted files land in AWS S3 · S3 event created', outputs:[], arrowLabel:'ba2-lbl' },
-  { node:'bn3',  arrow:'ba2',  pkt:{from:[292,152],to:[336,152]},
-    label:'Lambda — unzip files and create SQS events · fan-out to 3 parallel queues', outputs:[] },
-  { node:'bn4',  arrow:'ba3',  pkt:{from:[408,178],to:[309,218]},
-    label:'Complaints Model — BiLSTM 5-model ensemble · 562 dissatisfaction patterns · Topic LDA', outputs:['bn4-out1'], arrowLabel:'ba5-lbl' },
-  { node:'bn5',  arrow:'ba4',  pkt:{from:[408,178],to:[408,218]},
-    label:'NFR Model — 8 sub-models on IRE event · calls Bedrock for M1/M4/M5/M7/M8', outputs:['bn5-out1'] },
-  { node:'bn6',  arrow:'ba5',  pkt:{from:[408,178],to:[520,218]},
-    label:'Generative AI Models — Agentic MDC adjudication · IDR obligation tests via Bedrock', outputs:['bn6-out1'] },
-  { node:'bn7',  arrow:'ba6',  pkt:{from:[408,276],to:[490,290]},
-    label:'Amazon Bedrock — claude-sonnet-4-5 · inference for NFR + GenAI models', outputs:['bn7-out'], arrowLabel:'ba7-lbl' },
-  { node:'bn8',  arrow:'ba8',  pkt:{from:[310,280],to:[686,278]},
-    label:'HashiCorp Vault ADP — encrypt all model outputs before storage and transfer', outputs:[], arrowLabel:'ba8-lbl' },
-  { node:'bn9',  arrow:'ba9',  pkt:{from:[778,252],to:[820,252]},
-    label:'S3 Outputs — ADP-encrypted results stored · all 4 model outputs', outputs:[], arrowLabel:'ba9-lbl' },
-  { node:'bn10', arrow:'ba10', pkt:{from:[920,252],to:[950,252]},
-    label:'Lambda Daily Job — flatten + merge · pack encrypted outputs for on-prem transfer', outputs:[], arrowLabel:'ba11-lbl', complete:true },
+    label:'External Source — NFR + LivePerson raw data from on-prem', outputs:[] },
+  { node:'bn1',  arrow:'ba0',  pkt:{from:[84,86],to:[84,120]},
+    label:'PII Masking + Anonymisation — strip PII, hash IDs, CMOSxxxx · IRExxxx', outputs:[], arrowLabel:'ba1-lbl' },
+  { node:'bn2',  arrow:'ba1',  pkt:{from:[148,148],to:[190,148]},
+    label:'S3 Inbound — anonymised encrypted files arrive in AWS S3', outputs:[], arrowLabel:'ba2-lbl' },
+  { node:'bn3',  arrow:'ba2',  pkt:{from:[290,148],to:[334,148]},
+    label:'Lambda — unzip files, create SQS events, fan-out to 3 parallel model queues', outputs:[] },
+  { node:'bn4',  arrow:'ba3',  pkt:{from:[434,168],to:[434,208]},
+    label:'Model Execution — Complaints Topic · NFR Model · Agentic MDC run in parallel', outputs:[], arrowLabel:'ba5-lbl' },
+  { node:'bn7',  arrow:'ba6',  pkt:{from:[460,274],to:[460,294]},
+    label:'Amazon Bedrock — claude-sonnet-4-5 · Bedrock inference for NFR + GenAI models', outputs:[], arrowLabel:'ba7-lbl' },
+  { node:'bn8',  arrow:'ba8',  pkt:{from:[630,241],to:[656,241]},
+    label:'HashiCorp Vault ADP — encrypt all model outputs before transfer', outputs:[], arrowLabel:'ba8-lbl' },
+  { node:'bn9',  arrow:'ba9',  pkt:{from:[768,248],to:[812,248]},
+    label:'S3 Outputs — ADP-encrypted model results stored in AWS S3', outputs:[], arrowLabel:'ba9-lbl', complete:true },
 ];
 
 let batchTimers=[];
 
 function resetBatchDemo(){
   batchTimers.forEach(t=>clearTimeout(t));batchTimers=[];
-  for(let i=0;i<=10;i++){const n=document.getElementById('bn'+i);if(n){n.style.opacity='.2';n.style.filter='';}}
+  for(let i=0;i<=9;i++){const n=document.getElementById('bn'+i);if(n){n.style.opacity='.2';n.style.filter='';}}
   ['ba0','ba1','ba2','ba3','ba4','ba5','ba6','ba7','ba8','ba9','ba10','ba11',
    'ba1-lbl','ba2-lbl','ba5-lbl','ba7-lbl','ba8-lbl','ba9-lbl','ba11-lbl'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.style.opacity='0';
   });
-  ['bn4-out1','bn5-out1','bn6-out1','bn7-out'].forEach(id=>{
+  ['bn4-out1','bn5-out1','bn6-out1'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.style.opacity='0';
   });
   const pkt=document.getElementById('bPkt');if(pkt)pkt.style.opacity='0';
